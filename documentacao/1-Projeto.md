@@ -4,6 +4,12 @@
 
 ### Conceitos relevantes
 
+- Node Package Manager (NPM): é o gerenciador do Node.js. É usado para instalar bibliotecas externas, gerenciar dependências, criar e rodar scripts e organizar projetos Node.js.
+
+- node_modules: é o nome da pasta onde ficam armazenadas todas as bibliotecas e dependências instaladas pelo NPM. É criada após o "npm install" e contém todo o código das bibliotecas e pode ter subpastas internas (dependências das dependências). Essa pasta não deve ser enviada para o repositório remoto (avisar no gitignore).
+
+- **Express.js**: é um framework minimalista e flexível para Node.js que serve para **criar servidores web, APIs e gerenciar rotas e requisições HTTP** de forma rápida e organizada.
+
 - Tensorflow.js: é uma biblioteca JavaScript para treinamento e implantação de modelos de aprendizado de máquina no navegador da Web e no Node.js.
 
 
