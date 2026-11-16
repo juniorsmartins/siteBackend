@@ -1,13 +1,13 @@
 {
   "name": "sitebackend",
   "version": "1.0.0",
-  "description": "Kortex News - site de tecnologia para jornalismo",
+  "description": "Kortex News - jornalismo tecnológico",
   "license": "ISC",
   "author": "Junior Martins",
+  "main": "./src/server.js",
   "type": "module",
-  "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node --watch src/server.ts", 
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
@@ -16,5 +16,9 @@
   "allowScripts": {
     "@tensorflow/tfjs-node@4.22.0": true,
     "core-js": false
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "typescript": "^6.0.3"
   }
 }

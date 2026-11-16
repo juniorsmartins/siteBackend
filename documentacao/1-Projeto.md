@@ -17,6 +17,11 @@ npm init
 npm install @tensorflow/tfjs-node
 npm install @tensorflow/tfjs-node@4.22
 
+# instala o typescript na versão 6.0.3 e o types/node na versão 22 mais atual. Tudo como dependência dev (-D)
+npm install typescript@6.0.3 @types/node@22 -D
+
+
+
 ```
 
 ### Comandos úteis
@@ -40,5 +45,35 @@ nvm use 22
 
 # define qual versão do Node estará ativa por padrão/default
 nvm alias default 22
+
+# verifica qual é a versão estável mais recente do typescript
+npm view typescript dist-tags
+
+# verifica qual versão do Node é compatível com essa versão do typescript
+npm view typescript@7.0.2 engines
+
+# verifica quais as versões mais recentes do Typescript 6
+npm view typescript@6 version
+
+# verifica qual versão do types/node 22 será instalada (a última da lista - mais autual)
+npm view @types/node@22 version
+
+# verifica qual versão do typescript está instalada
+npx tsc -v
+
+# verifica qual versão do types/node está instalada
+npm ls @types/node
+
+# converte arquivo Typescript para Javascript
+npx tsc src/server.ts
+
+# gera arquivo de configuração do Typescript (tsconfig.json)
+npx tsc --init
+
+
+
+
+
+npm i tsx@4.16.2 -D
 ´´´
 

@@ -2,7 +2,7 @@ import tf from '@tensorflow/tfjs-node';
 
 // Função para treinar o modelo com os dados de entrada (inputXs) e saída (outputYs). 
 // Quanto mais dados de treino, melhor o modelo tende a aprender.
-// A função precisa ser syncronous (sync), ou seja, esperar o treinamento terminar antes de continuar.
+// A função precisa ser assíncrona (async), ou seja, esperar o treinamento terminar antes de continuar.
 // Por isso a função é async e usamos await ao chamá-la.
 // Retorna o modelo treinado.
 async function trainModel(inputXs, outputYs) {
@@ -53,6 +53,18 @@ async function trainModel(inputXs, outputYs) {
     return model;
 }
 
+async function predictPessoa(model, pessoaNormalizada) {
+
+    // 1. Transformar a pessoa normalizada em tensor
+    const tfInput = tf.tensor2d(pessoaNormalizada);
+
+    // 2. Fazer a previsão usando o modelo treinado
+    const prediction = model.predict(tfInput);
+    const predArray = await prediction.array();
+
+    return predArray[0].map((prob, index) => ({ prob, index }))
+}
+
 const tensorPessoasNormalizado = [
     [0.33, 1, 0, 0, 1, 0, 0], 
     [0, 0, 1, 0, 0, 1, 0], 
@@ -69,5 +81,18 @@ const tensorLabels = [
 const inputXs = tf.tensor2d(tensorPessoasNormalizado);
 const outputYs = tf.tensor2d(tensorLabels);
 
-const model = trainModel(inputXs, outputYs);
+const model = await trainModel(inputXs, outputYs);
+
+const pessoa = { nome: "Zé", idade: 28, cor: "verde", localizacao: "São Paulo" }
+const pessoaNormalizada = [
+    [0.2, 0, 0, 1, 1, 0, 0]
+]
+
+const predictions = await predictPessoa(model, pessoaNormalizada);
+const results = predictions.sort((a, b) => b.prob - a.prob)
+    .map(p => `${labelsNomes[p.index]} (${(p.prob * 100).toFixed(2)}%)`)
+    .join('\n');
+
+console.log(results);
+
 
