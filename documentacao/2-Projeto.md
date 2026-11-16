@@ -35,7 +35,7 @@ npm install typescript@6.0.3 @types/node@22 -D
 # instala Express.js
 npm install express
 
-#
+# instala types/express para o Typescript entender o código express
 npm install -D @types/express
 
 ```
