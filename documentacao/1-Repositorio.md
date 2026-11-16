@@ -35,17 +35,21 @@ git push -u origin master
 ## 3. Comandos úteis do Git
 
 ```bash
+# criar branch (switch é versão moderna) - Flab -b para mudar imeadiatamente para a branch recém criada. Flag -c 
+git checkout -b nome-da-branch
+git switch -c nome-da-branch
+
 # desfaz alterações e retorna para o estado da última versão salva
-git restore <nome-arquivo>
+git restore nome-do-arquivo
 
 # exibe o histórico de commits em ordem cronológica inversa
 git log
 
 # Viaja no tempo: move para outro commit do histórico
-git checkout <hash-do-commit>
+git checkout hash-do-commit
 
 # Viaja no tempo: coloca de volta no último commit mais recente da branch nomeada
-git checkout <nome-da-branch>
+git checkout nome-da-branch
 
 # puxa modificações de remoto para o local
 git pull
@@ -54,5 +58,5 @@ git pull
 git push 
 
 # traz cópia de repositório remoto para ambiente local
-git clone <link-repositório-remoto>
+git clone link-repositório-remoto
 ```
