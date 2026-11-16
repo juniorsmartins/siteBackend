@@ -1,4 +1,6 @@
-console.log("Server is running")
+import express from "express";
+
+console.log("Server is running");
 
 function sum(a: number, b: number): number {
     return a + b;

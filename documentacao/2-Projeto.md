@@ -12,9 +12,11 @@
 - **Express.js**: é um framework minimalista e flexível para Node.js, que serve para criar servidores web, APIs e gerenciar rotas e requisições HTTP de forma rápida e organizada.
 
 
-### Conceitos relevantes
+### Bibliotecas
 
 - **Tensorflow.js**: é uma biblioteca JavaScript para treinamento e implantação de modelos de aprendizado de máquina no navegador da Web e no Node.js.
+
+- ** **: 
 
 
 ### Criar projeto
@@ -30,7 +32,11 @@ npm install @tensorflow/tfjs-node@4.22
 # instala o typescript na versão 6.0.3 e o types/node na versão 22 mais atual. Tudo como dependência dev (-D)
 npm install typescript@6.0.3 @types/node@22 -D
 
+# instala Express.js
+npm install express
 
+#
+npm install -D @types/express
 
 ```
 
