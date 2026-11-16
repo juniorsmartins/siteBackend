@@ -53,7 +53,7 @@ nvm ls-remote --lts
 node -v
 
 # instala a versão do Node
-nvm install <versão>
+nvm install versão
 nvm install v22.23.5
 
 # ativa a versão do Node. A troca vale só para o terminal atual, a não ser que você use nvm alias default.

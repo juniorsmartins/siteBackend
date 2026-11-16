@@ -1,6 +1,7 @@
 import express from "express";
 import { myMiddleware } from "./middlewares/my-middleware.ts";
 import { router } from "./routes/index.ts";
+import { errorHandler } from "./error/error-handler.ts";
 
 const PORT = process.env.PORT || 3333;
 
@@ -13,14 +14,11 @@ app.use(myMiddleware); /* Aplica o middleware globalmente */
 /* Rotas */
 app.use(router);
 
+/* Middlewares Globais */
+// Middleware global de tratamento de erros. Deve ser registrado após todas as rotas e outros middlewares.
+app.use(errorHandler); 
+
 /* Inicializa o servidor */
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}.`);
 });
-
-function sum(a: number, b: number): number {
-    return a + b;
-}
-
-const result = sum(2, 3);
-console.log(result);
