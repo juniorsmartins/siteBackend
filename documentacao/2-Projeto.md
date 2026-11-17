@@ -49,6 +49,9 @@ npm install zod
 ### Comandos úteis
 
 ```bash
+# verifica o arquivo package.json e instala as dependência na pasta node_modules (recria ela quando necessário)
+npm install
+
 # lista versões do Node instaladas no notebook
 nvm ls
 
@@ -107,4 +110,22 @@ error-handler.ts
 
 # invólucro de erros
 app-error.ts
+```
+
+
+### Esquema de Validação
+
+```bash
+# instala o Zod
+npm install zod
+
+# cria middleware 
+
+# cria validador
+
+# informa rotas do validador
+
+# adiciona no tratador de erros
+
+
 ```
