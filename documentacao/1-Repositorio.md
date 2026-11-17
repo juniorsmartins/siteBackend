@@ -21,7 +21,7 @@ git add .
 git commit -m "commit inicial"
 
 # conecte seu repositório local com o remoto
-git remote add origin <link-repositório-remoto>
+git remote add origin link-repositório-remoto
 git remote add origin https://github.com/juniorsmartins/siteBackend.git
 
 # envia commit locais para repositório remoto (opção -u serve para salvar essa preferência no Git. Nos próximos envios ou atualizações, você não precisará digitar origin master inteirinho de novo; bastará digitar apenas: git push. Pode usar -u em todas as branchs.)
@@ -35,9 +35,13 @@ git push -u origin master
 ## 3. Comandos úteis do Git
 
 ```bash
-# criar branch (switch é versão moderna) - Flab -b para mudar imeadiatamente para a branch recém criada. Flag -c 
+# criar branch (switch é versão moderna) 
+# checkout cria branch e Flab -b muda para a branch recém criada. Switch muda para a branch e a Flag -c faz criar a branch.  
 git checkout -b nome-da-branch
 git switch -c nome-da-branch
+
+# lista branchs locais existentes
+git branch
 
 # desfaz alterações e retorna para o estado da última versão salva
 git restore nome-do-arquivo
