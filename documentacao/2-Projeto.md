@@ -49,7 +49,8 @@ npm install zod
 ### Comandos úteis
 
 ```bash
-# verifica o arquivo package.json e instala as dependência na pasta node_modules (recria ela quando necessário)
+# reinstala as dependências (node_modules) a partir do package.json (duas opções de comandos)
+npm ci
 npm install
 
 # lista versões do Node instaladas no notebook

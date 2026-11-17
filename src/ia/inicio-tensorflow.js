@@ -98,6 +98,7 @@ const tensorLabels = [
 ];
 
 // Criamos tensores de entrada (xs) e saída (ys) para treinar o modelo
+// Criando tensores de entrada e saída para o treinamento
 const inputXs = tf.tensor2d(tensorPessoasNormalizado)
 const outputYs = tf.tensor2d(tensorLabels)
 
