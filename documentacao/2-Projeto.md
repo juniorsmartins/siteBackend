@@ -48,7 +48,7 @@ npm install zod
 
 ### Comandos úteis
 
-´´´bash
+```bash
 # lista versões do Node instaladas no notebook
 nvm ls
 
@@ -97,14 +97,14 @@ npx tsc --init
 
 
 npm i tsx@4.16.2 -D
-´´´
+```
 
 
 ### Tratamento Global de Erros
-´´´bash
+```bash
 # Tratador
 error-handler.ts
 
 # invólucro de erros
 app-error.ts
-´´´
+```
