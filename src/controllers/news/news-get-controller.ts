@@ -4,7 +4,7 @@ import { NewsGetService } from "../../services/news/news-get-service.ts";
 export class NewsGetController {
 
     /**
-     * Show - Get para exibir um registro específico
+     * BuscarPorId - Get para exibir um registro específico
      * index - Get para pesquisar vários registros paginados
      */
 
