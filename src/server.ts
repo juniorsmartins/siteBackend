@@ -14,8 +14,8 @@ app.use(myMiddleware); /* Aplica o middleware globalmente */
 /* Rotas */
 app.use(router);
 
-/* Middlewares Globais */
-// Middleware global de tratamento de erros. Deve ser registrado após todas as rotas e outros middlewares.
+/* Middlewares Globais - tratamento de erros */
+// Deve ser registrado após todas as rotas e outros middlewares.
 app.use(errorHandler); 
 
 /* Inicializa o servidor */

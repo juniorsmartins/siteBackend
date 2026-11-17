@@ -16,7 +16,9 @@
 
 - **Tensorflow.js**: é uma biblioteca JavaScript para treinamento e implantação de modelos de aprendizado de máquina no navegador da Web e no Node.js.
 
-- ** **: 
+- **Zod**: biblioteca de validação. Pode definir esquemas para validar dados. Funciona em Node.js.
+
+- ** **:
 
 
 ### Criar projeto
@@ -32,13 +34,17 @@ npm install @tensorflow/tfjs-node@4.22
 # instala o typescript na versão 6.0.3 e o types/node na versão 22 mais atual. Tudo como dependência dev (-D)
 npm install typescript@6.0.3 @types/node@22 -D
 
-# instala Express.js
+# instala Express.js para rotas e requisições
 npm install express
 
 # instala types/express para o Typescript entender o código express
-npm install -D @types/express
+npm install -D @types/express 
+
+# instala o Zod para Schema Validation
+npm install zod
 
 ```
+
 
 ### Comandos úteis
 
@@ -93,3 +99,12 @@ npx tsc --init
 npm i tsx@4.16.2 -D
 ´´´
 
+
+### Tratamento de erros
+´´´
+# Tratador de erros
+error-handler.ts
+
+# invólucro de erros
+app-error.ts
+´´´

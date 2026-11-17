@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "@tensorflow/tfjs-node": "4.22",
-    "express": "^5.3.0"
+    "express": "^5.3.0",
+    "zod": "^4.6.7"
   },
   "allowScripts": {
     "@tensorflow/tfjs-node@4.22.0": true,
