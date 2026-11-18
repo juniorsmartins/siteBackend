@@ -121,12 +121,15 @@ app-error.ts
 ### Conexão com Mongo
 ```bash
 # Criar arquivo de conexão
-connect-to-mongodb.ts
+connect-to-mongodb-config.ts
 
 # Disponibilizar a DB_KEY no arquivo .env ou como variável de ambiente
 .env
 
-# Chama a conexão (connect-to-mongodb.ts) pelo servidor (server.ts)
+# Cria middleware de conexão
+database-connection-middleware.ts
+
+# Aciona o middleware no server
 server.ts
 
 # Criar schema de Notícia
