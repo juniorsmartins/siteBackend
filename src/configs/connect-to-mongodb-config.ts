@@ -29,7 +29,5 @@ export const connectToMongoDB = async (uri: string | undefined = process.env.DB_
         });
 
     await connecting;
-
-    console.log("Conectado ao MongoDB com sucesso.");
 }
 

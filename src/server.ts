@@ -1,5 +1,4 @@
 import express from "express";
-import { myMiddleware } from "./middlewares/my-middleware.ts";
 import { router } from "./routes/index.ts";
 import { errorHandler } from "./error/error-handler.ts";
 import { createDatabaseConnectionMiddleware } from "./middlewares/database-connection-middleware.ts";
@@ -11,7 +10,6 @@ const app = express(); /* Cria uma instância do aplicativo Express */
 
 /* Middlewares Globais */
 app.use(express.json()); /* Habilita o parsing de JSON no corpo das requisições */
-app.use(myMiddleware); /* Aplica o middleware globalmente */
 app.use(createDatabaseConnectionMiddleware(connectToMongoDB)); // Aplica o middleware de conexão com o banco de dados globalmente
 
 /* Rotas */

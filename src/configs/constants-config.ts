@@ -14,4 +14,6 @@ export const EDITORIAS = [
     "polícia",
     "meio ambiente", 
     "internacional"
-];
+] as const;
+
+export type Editoria = (typeof EDITORIAS)[number];

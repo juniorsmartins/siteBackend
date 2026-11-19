@@ -9,6 +9,7 @@ type Connect = () => Promise<void>;
  */
 export const createDatabaseConnectionMiddleware = 
 (connect: Connect) => async (_req: Request, _res: Response, next: NextFunction): Promise<void> => {
+    console.log("Middleware de conexão com o banco de dados iniciado.");
     try {
         await connect();
         next();

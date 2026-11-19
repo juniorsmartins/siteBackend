@@ -104,7 +104,6 @@ npx tsc --init
 
 
 
-npm i tsx@4.16.2 -D
 ```
 
 
@@ -123,18 +122,17 @@ app-error.ts
 # Criar arquivo de conexão
 connect-to-mongodb-config.ts
 
-# Disponibilizar a DB_KEY no arquivo .env ou como variável de ambiente
+# Disponibilizar constante DB_KEY no arquivo .env ou como variável de ambiente. O arquivo .env precisa estar na raiz. 
 .env
 
-# Cria middleware de conexão
+# Adicionar --env-file=.env nos scripts de start e dev
+pachage.json
+
+# Cria middleware genérico de conexão
 database-connection-middleware.ts
 
 # Aciona o middleware no server
 server.ts
-
-# Criar schema de Notícia
-
-
 ```
 
 
