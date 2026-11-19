@@ -18,7 +18,7 @@
 
 - **Zod**: biblioteca de validação. Pode definir esquemas para validar dados. Funciona em Node.js.
 
-- ** **:
+- **Mongoose**: biblioteca de ODM (Object Data Modeling) para interagir com o MongoDB.
 
 
 ### Criar projeto
@@ -43,12 +43,20 @@ npm install -D @types/express
 # instala o Zod para Schema Validation
 npm install zod
 
+# instala o Mongoose para camada de conexão com banco de dados MongoDB
+npm install mongoose 
+
+
 ```
 
 
 ### Comandos úteis
 
 ```bash
+# reinstala as dependências (node_modules) a partir do package.json (duas opções de comandos)
+npm ci
+npm install
+
 # lista versões do Node instaladas no notebook
 nvm ls
 
@@ -96,7 +104,6 @@ npx tsc --init
 
 
 
-npm i tsx@4.16.2 -D
 ```
 
 
@@ -107,4 +114,41 @@ error-handler.ts
 
 # invólucro de erros
 app-error.ts
+```
+
+
+### Conexão com Mongo
+```bash
+# Criar arquivo de conexão
+connect-to-mongodb-config.ts
+
+# Disponibilizar constante DB_KEY no arquivo .env ou como variável de ambiente. O arquivo .env precisa estar na raiz. 
+.env
+
+# Adicionar --env-file=.env nos scripts de start e dev
+pachage.json
+
+# Cria middleware genérico de conexão
+database-connection-middleware.ts
+
+# Aciona o middleware no server
+server.ts
+```
+
+
+### Esquema de Validação
+
+```bash
+# instala o Zod
+npm install zod
+
+# cria middleware 
+
+# cria validador
+
+# informa rotas do validador
+
+# adiciona no tratador de erros
+
+
 ```
