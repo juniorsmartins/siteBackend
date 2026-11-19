@@ -1,4 +1,4 @@
-export const MESSAGES_ERRO = Object.freeze({
+export const MESSAGES_ERROR = Object.freeze({
 
     GERAL: {
         ID_INVALIDO: "ID em formato inválido.",
