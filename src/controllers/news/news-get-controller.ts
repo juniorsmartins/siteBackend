@@ -5,14 +5,13 @@ export class NewsGetController {
 
     /**
      * BuscarPorId - Get para exibir um registro específico
-     * index - Get para pesquisar vários registros paginados
+     * Pesquisar - Get para pesquisar, com filtros, vários registros paginados
      */
 
     public async buscarPorId(req: Request<{ id: string }>, res: Response, next: NextFunction): Promise<void> {
 
         try {
             const { id } = req.params;
-            console.log("ID recebido: ", id);
             const resposta = await new NewsGetService().buscarPorId(id);
 
             res.status(200).json(resposta);
