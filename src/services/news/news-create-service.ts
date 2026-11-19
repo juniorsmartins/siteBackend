@@ -1,12 +1,16 @@
+import { newsRepository } from '../../repositories/news-repository.ts';
+import type { NewsLean, NewsCreateData } from '../../models/news-schema.ts';
 
 export class NewsCreateService {
 
-    public async criar(dadosNoticia: any): Promise<any> {
+    public async criar(dadosNoticia: NewsCreateData): Promise<NewsLean> {
 
         const { chapeu, titulo, linhaFina, conteudo, autor, imagemUrl, imagemLegenda, 
             linkOriginal, destaquePrincipal, destaqueSecundario, editoria } = dadosNoticia;
-        console.log(dadosNoticia);
 
-        return { mensagem: 'Notícia criada com sucesso' };
+        const noticiaCriada = await newsRepository.criar({ chapeu, titulo, linhaFina, conteudo, autor, imagemUrl, imagemLegenda, 
+            linkOriginal, destaquePrincipal, destaqueSecundario, editoria });
+
+        return noticiaCriada;
     }
 }
