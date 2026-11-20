@@ -4,7 +4,7 @@ import { MESSAGES_SUCCESS } from "../../error/messages-success.ts";
 
 export class NewsDeleteController {
 
-    public async deletarPorId(req: Request, res: Response, next: NextFunction): Promise<void> {
+    public async deletarPorId(req: Request<{ id: string }>, res: Response, next: NextFunction): Promise<void> {
 
         try {
             const { id } = req.params;

@@ -9,7 +9,7 @@ export class NewsDeleteService {
         validarFormatoId(id);
         await verificarExisteNewsPorId(id);
         await newsRepository.deletarPorId(id);
-        
+
         return id;
     }
 }
