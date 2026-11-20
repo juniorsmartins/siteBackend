@@ -6,9 +6,17 @@ type Id = string | Types.ObjectId;
 
 export const newsRepository = {
 
+    // ---------------------------------------------------------------------
+    // CRUD
+    // ---------------------------------------------------------------------
+
     async criar(dadosNoticia: NewsCreateData): Promise<NewsLean> {
         const noticia = await News.create(dadosNoticia);
         return noticia.toObject() as NewsLean;
+    },
+
+    async buscarPorId(id: Id): Promise<NewsLean | null> {
+        return await News.findById(id).lean<NewsLean>();
     },
 
     // async atualizar(id, dadosAtualizacao) {
@@ -19,8 +27,18 @@ export const newsRepository = {
     //     ).lean();
     // },
 
-    async buscarPorId(id: Id): Promise<NewsLean | null> {
-        return await News.findById(id).lean<NewsLean>();
+    async deletarPorId(id: Id): Promise<NewsLean | null> {
+        return await News.findByIdAndDelete(id).lean();
+    },
+
+
+    // ---------------------------------------------------------------------
+    // VERIFICAÇÕES
+    // ---------------------------------------------------------------------
+
+    async existePorId(id: Id): Promise<boolean> {
+        const resultado = await News.exists({ _id: id }).lean();
+        return !!resultado;
     },
 
     // ---------------------------------------------------------------------
@@ -119,10 +137,6 @@ export const newsRepository = {
     // ---------------------------------------------------------------------
     // EXCLUSÃO E CONTAGEM
     // ---------------------------------------------------------------------
-
-    // async deletar(id) {
-    //     return await News.findByIdAndDelete(id).lean();
-    // },
 
     // async deleteAll() {
     //     return await News.deleteMany({});

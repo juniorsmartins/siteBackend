@@ -10,9 +10,3 @@ export const MESSAGES_ERROR = Object.freeze({
     }
 });
 
-export const MESSAGES_SUCESSO = Object.freeze({
-
-    NEWS: {
-        DELETADO: "Notícia deletada com sucesso."
-    }
-});
