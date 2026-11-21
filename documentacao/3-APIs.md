@@ -24,7 +24,7 @@
 5. **Interface Uniforme**: para obter uma interface uniforme, são necessárias múltiplas restrições arquitetônicas para orientar o comportamento dos componentes. REST é definido por quatro restrições de interface: 
 
     5.1. Identificação de recursos: os recursos individuais são identificados nas requisições usando URIs. Cada coisa tem o seu.
-    5.2. Manipulação de recursos por meio de representações: você troca uma cópia do recurso, em um formato comum. Ex: json
+    5.2. Manipulação de recursos por meio de representações: você troca uma cópia do recurso, em um formato comum. Ex: json ou XML.
     5.3. Mensagens autodescritivas: a resposta explica o que aconteceu.
     5.4. Hipermídia: a resposta traz links para os próximos passos. É a parte que quase ninguém implementa na prática.
 
@@ -40,4 +40,5 @@
 3. [Diretrizes de design de APIs Rest da Microsoft](https://learn.microsoft.com/pt-br/azure/architecture/best-practices/api-design);
 4. [Rest API tutorial](https://restapitutorial.com/);
 5. [Restful API tutorial](https://restfulapi.net/).
+
 

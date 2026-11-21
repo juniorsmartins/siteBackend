@@ -102,14 +102,12 @@ npx tsc --init
 
 
 
-
-
 ```
 
 
 ### Tratamento Global de Erros
 ```bash
-# Tratador
+# tratador
 error-handler.ts
 
 # invólucro de erros
@@ -119,8 +117,8 @@ app-error.ts
 
 ### Conexão com Mongo
 ```bash
-# Criar arquivo de conexão
-connect-to-mongodb-config.ts
+# arquivo de conexão
+connect-mongodb-config.ts
 
 # Disponibilizar constante DB_KEY no arquivo .env ou como variável de ambiente. O arquivo .env precisa estar na raiz. 
 .env

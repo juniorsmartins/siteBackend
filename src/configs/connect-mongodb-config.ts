@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 
-
 /**
 * Promise da conexão em andamento. Evita que várias requisições simultâneas
 * Uma promise representa “algo que vai terminar”, e várias partes do código podem esperar a mesma promise.
@@ -8,7 +7,7 @@ import mongoose from 'mongoose';
 */
 let connecting: Promise<typeof mongoose> | null = null;
 
-export const connectToMongoDB = async (uri: string | undefined = process.env.DB_KEY): Promise<void> => {
+export const connectMongoDB = async (uri: string | undefined = process.env.DB_KEY): Promise<void> => {
 
     // 1. Já conectado: não faz nada (caminho comum, custo quase zero)
     if (mongoose.connection.readyState === 1) {

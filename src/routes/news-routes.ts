@@ -5,8 +5,8 @@ import { NewsDeleteController } from "../controllers/news/news-delete-controller
 
 const newsRouter = Router();
 const newsGetController = new NewsGetController();
-const newsCreateController = new NewsCreateController();
 const newsDeleteController = new NewsDeleteController();
+const newsCreateController = new NewsCreateController();
 
 newsRouter.get("/:id", newsGetController.buscarPorId);
 newsRouter.delete("/:id", newsDeleteController.deletarPorId);
