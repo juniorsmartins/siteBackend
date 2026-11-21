@@ -1,12 +1,13 @@
 import type { Request, Response, NextFunction } from "express";
 import { AppError } from "./app-error.ts";
 import { ZodError, z } from "zod";
+import { MESSAGES_ERROR } from "./messages-error.ts";
 
 export function errorHandler(error: any, request: Request, response: Response, next: NextFunction): any {
 
     // Erros personalizados
     if (error instanceof AppError) {
-        return response.status(error.statusCode).json({"ErrorHandler - ": error.message });
+        return response.status(error.statusCode).json({"ErrorHandler": error.message });
     }
 
     // Erros do Zod (validação de dados)
@@ -18,6 +19,6 @@ export function errorHandler(error: any, request: Request, response: Response, n
     }
 
     // Erros não tratados
-    return response.status(500).json({ mensagem: "ErrorHandler - Erro interno do servidor.", error: error?.message });
+    return response.status(500).json({ ErrorHandler: MESSAGES_ERROR.GERAL.ERRO_INTERNO, error: error?.message });
 }
 

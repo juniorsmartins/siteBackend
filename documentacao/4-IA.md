@@ -10,10 +10,12 @@
 
 ```bash
 # Passo 1 (ter notícias no database) - captura esses dados
-# Passo 2 (ter usuários cadastrados) - captura esses dados
-# Passo 3 (normalizador) - criar um normalizador dos dados de notícias e usuários
-# Passo 4 (peso - weight) - definir peso por critério 
-# Passo 5 (tensorflow) - enviar dados normalizados para o tensor
+# Passo 2 (normalizador) - criar um normalizador dos dados de notícias
+# Passo 3 (peso - weight) - definir pesos para critério de avaliação
+# Passo 4 (tensorflow) - enviar dados normalizados para o tensor
+
+# Passo 5 (ter usuários cadastrados) - captura esses dados 
+# Passo 6 (normalizador) - criar um normalizador dos dados de usuários
 # 
 
 ```
@@ -25,4 +27,12 @@
 # aciona o arquivo tensor
 node ./src/ia/inicio-tensorflow.js
 
+# para mudar a versão usada do Node somente no terminal aberto
+nvm use 22
+
+# restaura dependências pachage.json/node_modules
+npm ci
+
+# rodar a aplicação
+npm start
 ```
