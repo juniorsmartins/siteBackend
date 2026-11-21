@@ -1,6 +1,6 @@
 import express from "express";
 import { router } from "./routes/index.ts";
-import { errorHandler } from "./error/error-handler.ts";
+import { errorHandler } from "./error/handler-error.ts";
 import { createDatabaseConnectionMiddleware } from "./middlewares/database-connection-middleware.ts";
 import { connectMongoDB } from "./configs/connect-mongodb-config.ts";
 
