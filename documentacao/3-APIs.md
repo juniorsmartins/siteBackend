@@ -57,3 +57,9 @@ A noção de uma restrição opcional pode parecer um paradoxo. No entanto, ela 
 
 Entendimento: o servidor pode enviar código para o cliente executar.
 
+
+## Documentações de referência
+
+1. [Guia de APIs da Google](https://docs.cloud.google.com/apis/design?hl=pt-br);
+
+
