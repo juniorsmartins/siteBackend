@@ -4,7 +4,7 @@
 
 **Estilo de API**: um paradigma que utiliza padrões, práticas e protocolos para projetar, implementar e expor APIs. Um estilo de API é formado por uma combinação de características (protocolos, restrições de design e etc). Exemplos de estilos de API: Rest/Restful, APIs de consulta (GraphQL), Feed da web (RSS e Atom), Chamada de Procedimento Remoto - RPC (gRPC), Callback (Webhooks), Bidirecional (Websocket e gRPC), API baseada em Broker (Apache ActiveMQ, Apache Kafka e RabbitMQ) e etc.
 
-    - **Estilo Rest/Restful**: seguem seis restrições descritas na tese de Roy Fielding (https://oreil.ly/vNPXH). Embora muitas APIs se autodenominem Restful, na prática elas deixam de incluir links de hipermídia, que são um requisito do design de APIs Restful.  
+**Estilo Rest/Restful**: seguem seis restrições descritas na tese de Roy Fielding (https://oreil.ly/vNPXH). Embora muitas APIs se autodenominem Restful, na prática elas deixam de incluir links de hipermídia, que são um requisito do design de APIs Restful.  
 
 **Modelos de monetização de API**: pagamento por uso (pay-per-use), assinatura, freemium, taxa por transação e divisão de receita.
 
@@ -13,53 +13,31 @@
 
 ## Estilo Rest/Restful
 
-1. **Estilo Nulo**: o projetista começa com as necessidades do sistema como um todo, sem restrições, e então identifica e aplica restrições incrementalmente aos elementos do sistema, a fim de diferenciar o espaço de projeto e permitir que as forças que influenciam o comportamento do sistema fluam naturalmente, em harmonia com ele. Esse estilo enfatiza a contenção e a compreensão do contexto do sistema. 
+1. **Estilo Nulo**: o projetista começa com as necessidades do sistema como um todo, sem restrições, e então identifica e aplica restrições incrementalmente aos elementos do sistema, a fim de diferenciar o espaço de projeto e permitir que as forças que influenciam o comportamento do sistema fluam naturalmente, em harmonia com ele. Esse estilo enfatiza a contenção e a compreensão do contexto do sistema. Entendimento: é só o ponto de partida: um sistema sem nenhuma regra. As restrições abaixo são acrescentadas uma a uma.
 
-Entendimento: é só o ponto de partida: um sistema sem nenhuma regra. As restrições abaixo são acrescentadas uma a uma.
+2. **Cliente-Servidor**: separar as responsabilidades de quem pede a informação (navegador/Frontend) de quem guarda e processa os dados (Backend/Node.js/MongoDB). Servidores e clientes podem ser desenvolvidos ou substituídos independentemente, desde que a interface entre eles não seja alterada.
 
-2. **Cliente-Servidor**: as primeiras restrições adicionadas são as do estilo arquitetônico cliente-servidor. A separação de responsabilidades é o princípio por trás das restrições cliente-servidor. Ao separar as responsabilidades da interface do usuário das responsabilidades de armazenamento de dados, melhoramos a portabilidade da interface do usuário entre múltiplas plataformas e a escalabilidade, simplificando os componentes do servidor. Talvez o mais significativo para a Web, no entanto, seja que essa separação permite que os componentes evoluam independentemente, atendendo assimmmmm à exigência de escada da Internet de múltiplos domínios organizacionais. 
+3. **Sem Estado**: torne todas as interações cliente-servidor sem estado. O servidor não armazenará nada sobre a última requisição HTTP feita pelo cliente. Ele tratará cada requisição como nova. Sem sessão, sem histórico. O cliente é responsável por gerenciar o estado da aplicação. Cada solicitação do cliente deverá conter todas as informações necessárias para atender à solicitação – incluindo detalhes de autenticação e autorização.
 
-Entendimento: separar quem pede a informação (Frontend/navegador) de quem guarda e processa os dados (Backend/Node.js/MongoDB).
+4. **Cache**: para melhorar a eficiência da rede, adicionamos restrições de cache para formar o estilo cliente-cache-servidor sem estado. As restrições de cache exigem que os dados em uma resposta a uma solicitação sejam rotulados implícita ou explicitamente como armazenáveis ​​em cache ou não armazenáveis ​​em cache. Se uma resposta for armazenável em cache, o cache do cliente terá o direito de reutilizar esses dados de resposta para solicitações equivalentes posteriores. Um sistema de cache bem gerenciado elimina parcial ou totalmente algumas interações cliente-servidor, melhorando ainda mais a escalabilidade e o desempenho.
 
-3. **Sem Estado**: Em seguida, adicionamos uma restrição à interação cliente-servidor: a comunicação deve ser sem estado, de modo que cada solicitação do cliente para o servidor deve conter todas as informações necessárias para entender a solicitação e não pode se aproveitar de nenhum contexto armazenado no servidor. O estado da sessão é, portanto, mantido inteiramente no cliente. 
+5. **Interface Uniforme**: para obter uma interface uniforme, são necessárias múltiplas restrições arquitetônicas para orientar o comportamento dos componentes. REST é definido por quatro restrições de interface: 
 
-Essa restrição induz as propriedades de visibilidade, confiabilidade e escalabilidade. A visibilidade é aprimorada porque um sistema de monitoramento não precisa analisar além de um único dado de requisição para determinar a natureza completa da requisição. A confiabilidade é aprimorada porque facilita a recuperação de falhas parciais. A escalabilidade é aprimorada porque não precisar armazenar estado entre as requisições permite que o componente servidor libere recursos rapidamente e simplifica ainda mais a implementação, pois o servidor não precisa gerenciar o uso de recursos entre as requisições. 
+    5.1. Identificação de recursos: os recursos individuais são identificados nas requisições usando URIs. Cada coisa tem o seu.
+    5.2. Manipulação de recursos por meio de representações: você troca uma cópia do recurso, em um formato comum. Ex: json
+    5.3. Mensagens autodescritivas: a resposta explica o que aconteceu.
+    5.4. Hipermídia: a resposta traz links para os próximos passos. É a parte que quase ninguém implementa na prática.
 
-Como a maioria das escolhas arquitetônicas, a restrição de ausência de estado reflete uma compensação de projeto. A desvantagem é que ela pode diminuir o desempenho da rede, aumentando a quantidade de dados repetitivos (sobrecarga por interação) enviados em uma série de requisições, já que esses dados não podem ser mantidos no servidor em um contexto compartilhado. Além disso, colocar o estado da aplicação no lado do cliente reduz o controle do servidor sobre o comportamento consistente da aplicação, uma vez que esta passa a depender da implementação correta da semântica em múltiplas versões do cliente.
+6. **Sistema em Camadas**: REST permite usar uma arquitetura de sistema em camadas, onde você implanta as APIs no servidor A, armazena os dados no servidor B e autentica as solicitações no servidor C, por exemplo. Um cliente normalmente não consegue determinar se está conectado diretamente ao servidor final ou a um intermediário no caminho. O cliente só conhece a camada com a qual conversa. 
 
-Entendimento: o servidor não guarda memória da navegação do usuário entre uma requisição e outra. Cada pedido precisa trazer tudo o que é necessário para ser processado.
-
-4. **Cache**: para melhorar a eficiência da rede, adicionamos restrições de cache para formar o estilo cliente-cache-servidor sem estado. As restrições de cache exigem que os dados em uma resposta a uma solicitação sejam rotulados implícita ou explicitamente como armazenáveis ​​em cache ou não armazenáveis ​​em cache. Se uma resposta for armazenável em cache, o cache do cliente terá o direito de reutilizar esses dados de resposta para solicitações equivalentes posteriores. 
-
-A vantagem de adicionar restrições de cache é que elas têm o potencial de eliminar parcial ou totalmente algumas interações, melhorando a eficiência, a escalabilidade e o desempenho percebido pelo usuário, reduzindo a latência média de uma série de interações. A desvantagem, no entanto, é que um cache pode diminuir a confiabilidade se os dados desatualizados em seu cache diferirem significativamente dos dados que teriam sido obtidos se a solicitação tivesse sido enviada diretamente ao servidor.
-
-A arquitetura inicial da Web foi definida pelo conjunto de restrições cliente-cache-servidor sem estado. Ou seja, a justificativa de projeto apresentada para a arquitetura da Web antes de 1994 focava na interação cliente-servidor sem estado para a troca de documentos estáticos pela Internet. Os protocolos para comunicação dessas interações tinham suporte rudimentar para caches não compartilhados, mas não restringiam a interface a um conjunto consistente de semântica para todos os recursos. Em vez disso, a Web dependia do uso de uma biblioteca de implementação cliente-servidor comum (CERN libwww) para manter a consistência entre as aplicações Web.
-
-Entendimento: a resposta diz se pode ser guardada e reutilizada. Guardar respostas no navegador ou em intermediários para não ter que buscar no banco toda vez.
-
-5. **Interface Uniforme**: a principal característica que distingue o estilo arquitetural REST de outros estilos baseados em rede é a sua ênfase em uma interface uniforme entre os componentes. Ao aplicar o princípio da generalidade da engenharia de software à interface do componente, a arquitetura geral do sistema é simplificada e a visibilidade das interações é aprimorada. As implementações são desacopladas dos serviços que fornecem, o que incentiva a evolução independente. A contrapartida, porém, é que uma interface uniforme degrada a eficiência, uma vez que a informação é transferida de forma padronizada em vez de uma forma específica para as necessidades de uma aplicação. A interface REST foi projetada para ser eficiente na transferência de dados hipermídia de grande granularidade, otimizando para o caso comum da Web, mas resultando em uma interface que não é ideal para outras formas de interação arquitetural.
-
-Para obter uma interface uniforme, são necessárias múltiplas restrições arquitetônicas para orientar o comportamento dos componentes. REST é definido por quatro restrições de interface: identificação de recursos; manipulação de recursos por meio de representações; mensagens autodescritivas; e hipermídia como mecanismo do estado da aplicação.
-
-Entendimento: é a característica mais marcante do REST: todo mundo usa o mesmo padrão de comunicação. São quatro partes: Identificação de recursos (cada coisa tem uma URL), Manipulação por representações (você troca uma cópia do recurso, em um formato comum. Ex: json), Mensagens autodescritivas (a resposta explica o que aconteceu) e Hipermídia (a resposta traz links para os próximos passos). A hipermídia é a parte que quase ninguém implementa na prática. A maioria das APIs “RESTful” usa só as três primeiras.
-
-6. **Sistema em Camadas**: para melhorar ainda mais o comportamento para requisitos de escala da Internet, adicionamos restrições de sistema em camadas. O estilo de sistema em camadas permite que uma arquitetura seja composta por camadas hierárquicas, restringindo o comportamento dos componentes de forma que cada componente não possa "enxergar" além da camada imediata com a qual está interagindo. Ao restringir o conhecimento do sistema a uma única camada, limitamos a complexidade geral do sistema e promovemos a independência da infraestrutura. As camadas podem ser usadas para encapsular serviços legados e proteger novos serviços de clientes legados, simplificando os componentes ao mover funcionalidades pouco utilizadas para um intermediário compartilhado. Os intermediários também podem ser usados ​​para melhorar a escalabilidade do sistema, permitindo o balanceamento de carga de serviços em várias redes e processadores.
-
-A principal desvantagem dos sistemas em camadas é que eles adicionam sobrecarga e latência ao processamento de dados, reduzindo o desempenho percebido pelo usuário. Para um sistema baseado em rede que suporta restrições de cache, isso pode ser compensado pelos benefícios do cache compartilhado em intermediários. Colocar caches compartilhados nos limites de um domínio organizacional pode resultar em benefícios de desempenho significativos. Essas camadas também permitem que políticas de segurança sejam aplicadas aos dados que cruzam o limite organizacional. 
-
-A combinação de sistema em camadas e restrições de interface uniformes induz propriedades arquitetônicas semelhantes às do estilo uniforme de tubulação e filtro. Embora a interação REST seja bidirecional, os fluxos de dados de granularidade larga da interação hipermídia podem ser processados ​​como uma rede de fluxo de dados, com componentes de filtro aplicados seletivamente ao fluxo de dados para transformar o conteúdo à medida que ele passa. Dentro do REST, os componentes intermediários podem transformar ativamente o conteúdo das mensagens porque as mensagens são autodescritivas e sua semântica é visível para os intermediários.
-
-Entendimento: o cliente só conhece a camada com a qual conversa. 
-
-7. **Código sob demanda**: a adição final ao nosso conjunto de restrições para REST vem do estilo de código sob demanda. O REST permite que a funcionalidade do cliente seja estendida por meio do download e execução de código na forma de applets ou scripts. Isso simplifica os clientes, reduzindo o número de recursos que precisam ser pré-implementados. Permitir que os recursos sejam baixados após a implantação melhora a extensibilidade do sistema. No entanto, isso também reduz a visibilidade e, portanto, é apenas uma restrição opcional no REST.
-
-A noção de uma restrição opcional pode parecer um paradoxo. No entanto, ela tem um propósito no projeto arquitetônico de um sistema que abrange múltiplas fronteiras organizacionais. Significa que a arquitetura só se beneficia (e sofre as desvantagens) das restrições opcionais quando se sabe que elas estão em vigor em alguma parte do sistema como um todo. Por exemplo, se todo o software cliente de uma organização suporta applets Java, os serviços dessa organização podem ser construídos de forma a se beneficiarem de funcionalidades aprimoradas por meio de classes Java disponíveis para download. Ao mesmo tempo, porém, o firewall da organização pode impedir a transferência de applets Java de fontes externas e, portanto, para o restante da Web, parecerá que esses clientes não suportam código sob demanda. Uma restrição opcional nos permite projetar uma arquitetura que suporte o comportamento desejado no caso geral, mas com o entendimento de que ele pode ser desativado em alguns contextos.
-
-Entendimento: o servidor pode enviar código para o cliente executar.
+7. **Código sob demanda**: o servidor pode enviar código para o cliente executar. Bem, essa restrição é opcional. Na maioria das vezes, você enviará as representações estáticas dos recursos na forma de XML ou JSON. Mas, quando necessário, você pode permitir que "return executable code" uma parte da sua aplicação funcione dessa forma; por exemplo, os clientes podem chamar sua API para obter o código de renderização de um widget da interface do usuário ou um script. 
 
 
 ## Documentações de referência
 
-1. [Guia de APIs da Google](https://docs.cloud.google.com/apis/design?hl=pt-br);
-
+1. [Guia de design de APIs do Google](https://google.aip.dev/1); 
+2. [Guia de projeto da API do Google](https://docs.cloud.google.com/apis/design?hl=pt-br);
+3. [Diretrizes de design de APIs Rest da Microsoft](https://learn.microsoft.com/pt-br/azure/architecture/best-practices/api-design);
+4. [Rest API tutorial](https://restapitutorial.com/);
+5. [Restful API tutorial](https://restfulapi.net/).
 
