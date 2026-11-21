@@ -1,6 +1,6 @@
 import { newsRepository } from '../repositories/news-repository.ts';
 import { AppError } from '../error/app-error.ts';
-import { MESSAGES_ERROR } from '../error/messages-error.ts';
+import { MESSAGES_ERROR } from '../error/error-messages.ts';
 
 export async function verificarExisteNewsPorId(id: string): Promise<void> {
     const existe = await newsRepository.existePorId(id);

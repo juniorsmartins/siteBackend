@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import { NewsDeleteService } from "../../services/news/news-delete-service.ts";
-import { MESSAGES_SUCCESS } from "../../error/messages-success.ts";
+import { MESSAGES_SUCCESS } from "../../configs/messages-success-config.ts";
 
 export class NewsDeleteController {
 
