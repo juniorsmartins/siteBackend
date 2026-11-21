@@ -1,5 +1,5 @@
 import { newsRepository } from '../../repositories/news-repository.ts';
-import type { NewsLean, NewsCreateData } from '../../models/news-schema.ts';
+import type { NewsLean, NewsCreateData } from '../../schemas/news-schema.ts';
 
 export class NewsCreateService {
 

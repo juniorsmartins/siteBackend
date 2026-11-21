@@ -1,5 +1,5 @@
-import { News } from '../models/news-schema.ts';
-import type { NewsLean, NewsCreateData } from '../models/news-schema.ts';
+import { News } from '../schemas/news-schema.ts';
+import type { NewsLean, NewsCreateData } from '../schemas/news-schema.ts';
 import type { QueryFilter, Types } from 'mongoose';
 
 type Id = string | Types.ObjectId;

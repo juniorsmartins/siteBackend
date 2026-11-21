@@ -1,6 +1,6 @@
 import { isValidObjectId } from "mongoose";
-import { MESSAGES_ERROR } from "../error/messages-error.ts";
-import { AppError } from "../error/app-error.ts";
+import { MESSAGES_ERROR } from "../errors/messages-error.ts";
+import { AppError } from "../errors/app-error.ts";
 
 export const validarFormatoId = (id: string): void => {
     if (!isValidObjectId(id)) {

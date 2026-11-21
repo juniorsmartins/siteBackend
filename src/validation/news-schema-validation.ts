@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { NEWS_RULES } from "../configs/constants-config.ts";
-import { MESSAGES_ERROR } from "../error/messages-error.ts";
+import { MESSAGES_ERROR } from "../errors/messages-error.ts";
 
 export const newsCreateSchemaValidation = z.object({
 
