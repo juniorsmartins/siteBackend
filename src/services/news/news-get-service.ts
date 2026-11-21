@@ -1,7 +1,7 @@
 import { newsRepository } from '../../repositories/news-repository.ts';
-import type { NewsLean } from '../../models/news-schema.ts';
-import { AppError } from '../../error/app-error.ts';
-import { MESSAGES_ERROR } from '../../error/messages-error.ts';
+import type { NewsLean } from '../../schemas/news-schema.ts';
+import { AppError } from '../../errors/app-error.ts';
+import { MESSAGES_ERROR } from '../../errors/messages-error.ts';
 import { validarFormatoId } from '../../utils/utils.ts';
 
 export class NewsGetService {

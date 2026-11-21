@@ -1,6 +1,6 @@
 import express from "express";
 import { router } from "./routes/index.ts";
-import { errorHandler } from "./error/error-handler.ts";
+import { errorHandler } from "./errors/handler-error.ts";
 import { createDatabaseConnectionMiddleware } from "./middlewares/database-connection-middleware.ts";
 import { connectMongoDB } from "./configs/connect-mongodb-config.ts";
 
@@ -23,3 +23,9 @@ app.use(errorHandler);
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}.`);
 });
+
+// Exportação padrão necessária para Serverless na Vercel
+export default app;
+
+// Exportação nomeada do aplicativo Express, útil para testes ou outros usos fora do ambiente Serverless
+export { app };

@@ -1,11 +1,14 @@
 import type { Request, Response, NextFunction } from "express";
 
-export const validateSchemaMiddleware = (schema: any) => {
+// Tipo que permite escolher qual parte da requisição validar (padrão: body)
+type RequestLocation = "body" | "query" | "params";
 
-    return (request: Request, response: Response, next: NextFunction) => {
+export const validateSchemaMiddleware = (schema: any, location: RequestLocation = "body") => {
+
+    return (request: Request, response: Response, next: NextFunction): void => {
 
         try {
-            schema.parse(request.body);
+            schema.parse(request[location]);
             next(); // Continua para o próximo middleware se a validação passar
 
         } catch (error: any) {
