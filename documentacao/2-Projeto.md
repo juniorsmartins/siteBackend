@@ -102,14 +102,12 @@ npx tsc --init
 
 
 
-
-
 ```
 
 
 ### Tratamento Global de Erros
 ```bash
-# Tratador
+# tratador
 error-handler.ts
 
 # invólucro de erros
@@ -119,16 +117,16 @@ app-error.ts
 
 ### Conexão com Mongo
 ```bash
-# Criar arquivo de conexão
-connect-to-mongodb-config.ts
+# arquivo de conexão
+connect-mongodb-config.ts
 
-# Disponibilizar constante DB_KEY no arquivo .env ou como variável de ambiente. O arquivo .env precisa estar na raiz. 
+# disponibilizar constante DB_KEY no arquivo .env ou como variável de ambiente. O arquivo .env precisa estar na raiz. 
 .env
 
-# Adicionar --env-file=.env nos scripts de start e dev
+# adicionar --env-file=.env nos scripts de start e dev
 pachage.json
 
-# Cria middleware genérico de conexão
+# middleware genérico de conexão
 database-connection-middleware.ts
 
 # Aciona o middleware no server
@@ -143,12 +141,15 @@ server.ts
 npm install zod
 
 # cria middleware 
+validate-schema-middleware.ts
 
 # cria validador
+news-schema-validation.ts
 
-# informa rotas do validador
+# adiciona a validação nas rotas
+news-routes.ts
 
 # adiciona no tratador de erros
-
+error-handler.ts
 
 ```

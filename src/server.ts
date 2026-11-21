@@ -2,7 +2,7 @@ import express from "express";
 import { router } from "./routes/index.ts";
 import { errorHandler } from "./error/error-handler.ts";
 import { createDatabaseConnectionMiddleware } from "./middlewares/database-connection-middleware.ts";
-import { connectToMongoDB } from "./configs/connect-to-mongodb-config.ts";
+import { connectMongoDB } from "./configs/connect-mongodb-config.ts";
 
 const PORT = process.env.PORT || 3333;
 
@@ -10,7 +10,7 @@ const app = express(); /* Cria uma instância do aplicativo Express */
 
 /* Middlewares Globais */
 app.use(express.json()); /* Habilita o parsing de JSON no corpo das requisições */
-app.use(createDatabaseConnectionMiddleware(connectToMongoDB)); // Aplica o middleware de conexão com o banco de dados globalmente
+app.use(createDatabaseConnectionMiddleware(connectMongoDB)); // Aplica o middleware de conexão com o banco de dados globalmente
 
 /* Rotas */
 app.use(router);

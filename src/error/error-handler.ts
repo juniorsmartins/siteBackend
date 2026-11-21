@@ -5,17 +5,17 @@ import { MESSAGES_ERROR } from "./messages-error.ts";
 
 export function errorHandler(error: any, request: Request, response: Response, next: NextFunction): any {
 
-    // Erros personalizados
-    if (error instanceof AppError) {
-        return response.status(error.statusCode).json({"ErrorHandler": error.message });
-    }
-
     // Erros do Zod (validação de dados)
     if (error instanceof ZodError) {
         return response.status(400).json({ 
-            message: "ErrorHandler - Erro de validação de dados.",
+            message: "Erros de validação de dados.",
             issues: z.treeifyError(error)
         });
+    }
+
+    // Erros personalizados
+    if (error instanceof AppError) {
+        return response.status(error.statusCode).json({"ErrorHandler": error.message });
     }
 
     // Erros não tratados
