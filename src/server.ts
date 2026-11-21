@@ -23,3 +23,9 @@ app.use(errorHandler);
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}.`);
 });
+
+// Exportação padrão necessária para Serverless na Vercel
+export default app;
+
+// Exportação nomeada do aplicativo Express, útil para testes ou outros usos fora do ambiente Serverless
+export { app };

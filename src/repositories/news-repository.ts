@@ -10,7 +10,7 @@ export const newsRepository = {
     // CRUD
     // ---------------------------------------------------------------------
 
-    async criar(dadosNoticia: NewsCreateData): Promise<NewsLean> {
+    async create(dadosNoticia: NewsCreateData): Promise<NewsLean> {
         const noticia = await News.create(dadosNoticia);
         return noticia.toObject() as NewsLean;
     },

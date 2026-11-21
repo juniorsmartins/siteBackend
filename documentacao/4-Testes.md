@@ -15,11 +15,20 @@ npm instal -D vitest
 
 # instalar biblioteca de testes de integração
 npm install -D supertest
+npm install -D @types/supertest
 
 # instalar banco em memória para testar MongoDB/Mongoose
 npm install -D mongodb-memory-server
+npm approve-scripts mongodb-memory-server
 
-# 
+# levanta o banco de dados
+mongodb-in-memory.ts
+
+# gera dados para teste
+factories.ts
+
+# testes
+news-integration.test.ts
 
 ```
 
