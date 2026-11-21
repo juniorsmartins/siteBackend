@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { newsRouter } from "./news-routes.ts";
+import { newsRouter } from "./news-route.ts";
 
 const router = Router();
 
