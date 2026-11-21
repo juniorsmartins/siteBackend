@@ -7,19 +7,12 @@
 **mongodb-memory-server**: utilitário para testes de integração com MongoDB/Mongoose. Executa um servidor MongoDB na memória RAM da máquina de testes.
 
 
-## Testes unitários
+## Testes unitários e de integração
 
 ```bash
-# instalar biblioteca de testes unitários
-npm install -D vitest
+#instalar biblioteca de testes unitários
+npm instal -D vitest
 
-
-```
-
-
-## Testes de integração
-
-```bash
 # instalar biblioteca de testes de integração
 npm install -D supertest
 
