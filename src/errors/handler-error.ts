@@ -15,7 +15,7 @@ export function errorHandler(error: any, request: Request, response: Response, n
 
     // Erros personalizados
     if (error instanceof AppError) {
-        return response.status(error.statusCode).json({"ErrorHandler": error.message });
+        return response.status(error.statusCode).json(error.message);
     }
 
     // Erros não tratados

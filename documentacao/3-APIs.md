@@ -33,12 +33,27 @@
 7. **Código sob demanda**: o servidor pode enviar código para o cliente executar. Bem, essa restrição é opcional. Na maioria das vezes, você enviará as representações estáticas dos recursos na forma de XML ou JSON. Mas, quando necessário, você pode permitir que "return executable code" uma parte da sua aplicação funcione dessa forma; por exemplo, os clientes podem chamar sua API para obter o código de renderização de um widget da interface do usuário ou um script. 
 
 
+## Padrões de Design
+
+1. Idioma da API: inglês
+2. Nomenclatura de APIs: em uma API Rest, a norma é adotar nomes orientados a recursos (dados) e no plural. Ex: /orders/123. Por outro lado, APIs de GraphQL, gRPC ou Brokers normalmente seguem uma abordagem orientada à finalidade, o que possibilita maior flexibilidade permitindo o uso tanto de nomes no singular quanto no plural. 
+3. Versionamento (ou controle de versão): APIs estão em constante mudança e evolução. Por isso, precisamos levar o versionamento em consideração, de modo a permitir que atendam a todos os seus usuários à medida que as mudanças ocorrem. Há várias abordagens de versionamento:
+    3.1. Versionamento por caminho (URI): /v1/orders/123.
+    3.2. Versionamento por parâmetro de consulta: /orders?api-version=v1 ou /orders?resource-version=4.2.3
+    3.3. Versionamento por header (cabeçalho): Accept: application/vnd.example+json;api-version=1
+    3.4. Versionamento via payload da mensagem: { "version": "v1", data: {...} }
+    3.5. Outras: versionamento semântico; versionamento por calendário; versionamento por hash.
+4. 
+
+
+
 ## Documentações de referência
 
 1. [Guia de design de APIs do Google](https://google.aip.dev/1); 
 2. [Guia de projeto da API do Google](https://docs.cloud.google.com/apis/design?hl=pt-br);
 3. [Diretrizes de design de APIs Rest da Microsoft](https://learn.microsoft.com/pt-br/azure/architecture/best-practices/api-design);
 4. [Rest API tutorial](https://restapitutorial.com/);
-5. [Restful API tutorial](https://restfulapi.net/).
+5. [Restful API tutorial](https://restfulapi.net/);
+6. [Livro: Dominando Estilos de APIs](https://www.amazon.com.br/dp/857522980X?lv=shuf&hvlocphy=9101913&hvptwo=&hvnetw=g&mcid=&hvext=432675436952&hvadid=829364749849&language=pt_BR&hvpone=&hvlocint=&hvcampaign=24393919600&hydadcr=22379_13865195_2561052&hvpos=&hvdev=c&hvdvcmdl=&hvocijid=11381303359229873392--&hvqmt=a&hvexpln=0&tag=smgoogbrddspts-20&hvtargid=kwl-2484167636399&adgrpid=204141566089&hvrand=11381303359229873392&channelId=425&ref_=&plpRedirect=mhFallback&th=1);
 
 

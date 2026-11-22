@@ -1,6 +1,6 @@
-import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 import request from 'supertest';
-import { MongoMemoryServer } from 'mongodb-memory-server';
+import mongoose from 'mongoose';
+import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 import { newsRepository } from '../repositories/news-repository.ts';
 import { MESSAGES_ERROR } from '../errors/messages-error.ts';
 import { connectInMemoryMongoDB, clearInMemoryMongoDB, disconnectInMemoryMongoDB } from './mongodb-in-memory.ts';
@@ -40,6 +40,29 @@ describe('News Integration Tests', () => {
                 editoria: newsInput.editoria
             });
         });
+        
+        it('Deve lançar erro 400 por ID inválido.', async () => {
 
+            const response = await request(app)
+                .get(`/v1/news/${'id-invalido'}`);
+
+            expect(response.status).toBe(400);
+            expect(response.body).toContain(MESSAGES_ERROR.GERAL.ID_INVALIDO);
+
+        });
+
+        it('Deve lançar erro 404 por ID não encontrado.', async () => {
+            const idValidoInexistente = new mongoose.Types.ObjectId();
+
+            const response = await request(app)
+                .get(`/v1/news/${idValidoInexistente}`);
+                
+            expect(response.status).toBe(404);
+            expect(response.body).toContain(MESSAGES_ERROR.NEWS.NAO_ENCONTRADO);
+        });
     });
+
+    describe('Delete', () => {});
+
+    describe('Create', () => {});
 });
