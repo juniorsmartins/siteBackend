@@ -128,17 +128,23 @@ describe('News Integration Tests', () => {
 
         });
 
-        it('Deve lançar erro 400 por dados inválidos.', async () => {
+        it('Deve lançar erro 400 por dados inválidos - Schema Validation.', async () => {
             const newsInput = newsCreateFactory();
+            newsInput.chapeu = 'C2tre T78911 Yasd43gpoer Ghut'; // Tornando o chapéu inválido para gerar erro 400
             newsInput.titulo = 'T'; // Tornando o título inválido para gerar erro 400
+            newsInput.linhaFina = 'L'; // Tornando a linha fina inválida para gerar erro 400
 
             const response = await request(app)
                 .post('/v1/news')
                 .send(newsInput);
 
             expect(response.status).toBe(400);
+            expect(response.body.issues.properties["chapeu"].errors)
+                .toContain(MESSAGES_ERROR.NEWS.FIELD_HAT_MAX_CARACTERES(NEWS_RULES.HAT.MAX));
             expect(response.body.issues.properties["titulo"].errors)
                 .toContain(MESSAGES_ERROR.NEWS.FIELD_TITLE_MIN_CARACTERES(NEWS_RULES.TITLE.MIN));
+            expect(response.body.issues.properties["linhaFina"].errors)
+                .toContain(MESSAGES_ERROR.NEWS.FIELD_SUBHEADLINE_MIN_CARACTERES(NEWS_RULES.SUBHEADLINE.MIN));
         });
     });
 });
