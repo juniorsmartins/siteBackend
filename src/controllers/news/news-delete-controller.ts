@@ -4,11 +4,11 @@ import { MESSAGES_SUCCESS } from "../../configs/messages-success-config.ts";
 
 export class NewsDeleteController {
 
-    public async deletarPorId(req: Request<{ id: string }>, res: Response, next: NextFunction): Promise<void> {
+    public async deleteById(req: Request<{ id: string }>, res: Response, next: NextFunction): Promise<void> {
 
         try {
             const { id } = req.params;
-            const resposta = await new NewsDeleteService().deletarPorId(id);
+            const resposta = await new NewsDeleteService().deleteById(id);
 
             res.status(200).json({
                 message: MESSAGES_SUCCESS.NEWS.DELETED,

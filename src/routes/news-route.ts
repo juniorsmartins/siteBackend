@@ -10,8 +10,8 @@ const newsGetController = new NewsGetController();
 const newsDeleteController = new NewsDeleteController();
 const newsCreateController = new NewsCreateController();
 
-newsRouter.get("/:id", newsGetController.buscarPorId);
-newsRouter.delete("/:id", newsDeleteController.deletarPorId);
+newsRouter.get("/:id", newsGetController.findById);
+newsRouter.delete("/:id", newsDeleteController.deleteById);
 newsRouter.post("/", validateSchemaMiddleware(newsCreateSchemaValidation), newsCreateController.create);
 
 export { newsRouter };
