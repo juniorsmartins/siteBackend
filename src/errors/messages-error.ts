@@ -2,7 +2,8 @@ import { NEWS_RULES } from "../configs/constants-config.ts";
 
 export const MESSAGES_ERROR = Object.freeze({
 
-    GERAL: {
+    GENERAL: {
+        DATA_VALIDATION_ERRORS: "Erros de validação de dados.",
         INVALID_ID: "ID em formato inválido.",
         INTERNAL_ERROR: "Ocorreu um erro interno no servidor. Tente novamente mais tarde."
     },

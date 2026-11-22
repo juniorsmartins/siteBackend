@@ -8,7 +8,7 @@ export function errorHandler(error: any, request: Request, response: Response, n
     // Erros do Zod (validação de dados)
     if (error instanceof ZodError) {
         return response.status(400).json({ 
-            message: "Erros de validação de dados.",
+            message: MESSAGES_ERROR.GENERAL.DATA_VALIDATION_ERRORS,
             issues: z.treeifyError(error)
         });
     }
@@ -19,6 +19,6 @@ export function errorHandler(error: any, request: Request, response: Response, n
     }
 
     // Erros não tratados
-    return response.status(500).json({ ErrorHandler: MESSAGES_ERROR.GERAL.ERRO_INTERNO, error: error?.message });
+    return response.status(500).json({ ErrorHandler: MESSAGES_ERROR.GENERAL.INTERNAL_ERROR, error: error?.message });
 }
 
