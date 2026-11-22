@@ -4,6 +4,6 @@ import { AppError } from "../errors/app-error.ts";
 
 export const validarFormatoId = (id: string): void => {
     if (!isValidObjectId(id)) {
-        throw new AppError(MESSAGES_ERROR.GERAL.ID_INVALIDO, 400);
+        throw new AppError(MESSAGES_ERROR.GERAL.INVALID_ID, 400);
     }
 }

@@ -11,9 +11,8 @@ export class NewsDeleteController {
             const resposta = await new NewsDeleteService().deletarPorId(id);
 
             res.status(200).json({
-                sucesso: true, 
-                mensagem: MESSAGES_SUCCESS.NEWS.DELETADO,
-                resposta
+                message: MESSAGES_SUCCESS.NEWS.DELETED,
+                idDeleted: resposta
             });
 
         } catch (error) {

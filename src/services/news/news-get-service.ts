@@ -12,7 +12,7 @@ export class NewsGetService {
         
         const news = await newsRepository.buscarPorId(id);
         if (!news) {
-            throw new AppError(MESSAGES_ERROR.NEWS.NAO_ENCONTRADO, 404);
+            throw new AppError(MESSAGES_ERROR.NEWS.NOT_FOUND, 404);
         }
 
         return news;

@@ -3,12 +3,12 @@ import { NEWS_RULES } from "../configs/constants-config.ts";
 export const MESSAGES_ERROR = Object.freeze({
 
     GERAL: {
-        ID_INVALIDO: "ID em formato inválido.",
-        ERRO_INTERNO: "Ocorreu um erro interno no servidor. Tente novamente mais tarde."
+        INVALID_ID: "ID em formato inválido.",
+        INTERNAL_ERROR: "Ocorreu um erro interno no servidor. Tente novamente mais tarde."
     },
 
     NEWS: {
-        NAO_ENCONTRADO: "Notícia não encontrada.", 
+        NOT_FOUND: "Notícia não encontrada.", 
         FIELD_HAT_MIN_CARACTERES: (min = NEWS_RULES.HAT.MIN) => `O chapéu deve ter no mínimo ${min} caracteres.`,
         FIELD_HAT_MAX_CARACTERES: (max = NEWS_RULES.HAT.MAX) => `O chapéu deve ter no máximo ${max} caracteres.`,
         FIELD_TITLE_MIN_CARACTERES: (min = NEWS_RULES.TITLE.MIN) => `O título deve ter no mínimo ${min} caracteres.`,
