@@ -3,11 +3,6 @@ import { NewsGetService } from "../../services/news/news-get-service.ts";
 
 export class NewsGetController {
 
-    /**
-     * BuscarPorId - Get para exibir um registro específico
-     * Pesquisar - Get para pesquisar, com filtros, vários registros paginados
-     */
-
     public async findById(req: Request<{ id: string }>, res: Response, next: NextFunction): Promise<void> {
 
         try {

@@ -19,6 +19,5 @@ export function errorHandler(error: any, request: Request, response: Response, n
     }
 
     // Erros não tratados
-    return response.status(500).json({ ErrorHandler: MESSAGES_ERROR.GENERAL.INTERNAL_ERROR, error: error?.message });
+    return response.status(500).json({ HandlerError: MESSAGES_ERROR.GENERAL.INTERNAL_ERROR, error: error?.message });
 }
-

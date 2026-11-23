@@ -27,18 +27,17 @@
 # cria projeto Node (npm init -y / para criar sem fazer perguntas interativas)
 npm init 
 
-# instala a biblioteca do TensorFlow (pode precisar ter dependência aprovada no allowScripts do package.json)
-npm install @tensorflow/tfjs-node
-npm install @tensorflow/tfjs-node@4.22
-
-# instala o typescript na versão 6.0.3 e o types/node na versão 22 mais atual. Tudo como dependência dev (-D)
-npm install typescript@6.0.3 @types/node@22 -D
-
 # instala Express.js para rotas e requisições
 npm install express
+npm install express@5.3.0
+
+# instala o typescript na versão 6.0.3 e o types/node na versão 22. Tudo como dependência dev (-D)
+npm install -D typescript@6.0.3 
+npm install -D @types/node@22 
 
 # instala types/express para o Typescript entender o código express
 npm install -D @types/express 
+npm install -D @types/express@5.0.6
 
 # instala o Zod para Schema Validation
 npm install zod
@@ -46,7 +45,11 @@ npm install zod
 # instala o Mongoose para camada de conexão com banco de dados MongoDB
 npm install mongoose 
 
+# instala a biblioteca do TensorFlow (pode precisar ter dependência aprovada no allowScripts do package.json)
+npm install @tensorflow/tfjs-node
+npm install @tensorflow/tfjs-node@4.22
 
+Obs: não esqueça de criar o .gitignore
 ```
 
 
@@ -100,8 +103,11 @@ npx tsc src/server.ts
 # gera arquivo de configuração do Typescript (tsconfig.json)
 npx tsc --init
 
+# instala tsx
+npm install -D tsx@4.16.2
 
-
+# instala o Knex (é um SQL Query Builder - construtor de consultas SQL. Funciona como camada de abstração)
+npm install knex
 ```
 
 
