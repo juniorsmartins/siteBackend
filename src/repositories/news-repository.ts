@@ -19,13 +19,13 @@ export const newsRepository = {
         return await News.findById(id).lean<NewsLean>();
     },
 
-    // async atualizar(id, dadosAtualizacao) {
-    //     return await News.findByIdAndUpdate(
-    //         id,
-    //         { $set: dadosAtualizacao },
-    //         { new: true, runValidators: true }
-    //     ).lean();
-    // },
+    async update(id: Id, dadosAtualizacao: Partial<NewsCreateData>): Promise<NewsLean | null> {
+        return await News.findByIdAndUpdate(
+            id,
+            { $set: dadosAtualizacao },
+            { new: true, runValidators: true } 
+        ).lean(); 
+    },
 
     async deletarPorId(id: Id): Promise<NewsLean | null> {
         return await News.findByIdAndDelete(id).lean();

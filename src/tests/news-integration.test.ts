@@ -15,7 +15,7 @@ describe('News Integration Tests', () => {
     afterEach(clearInMemoryMongoDB);
     afterAll(disconnectInMemoryMongoDB);
 
-    describe('Get', () => {
+    describe('FindById', () => {
 
         it('Deve buscar uma notícia com sucesso.', async () => {
 
@@ -147,5 +147,39 @@ describe('News Integration Tests', () => {
             expect(response.body.issues.properties["linhaFina"].errors)
                 .toContain(MESSAGES_ERROR.NEWS.FIELD_SUBHEADLINE_MIN_CARACTERES(NEWS_RULES.SUBHEADLINE.MIN));
         });
+    });
+
+    describe('Update', () => {
+
+        it('Deve atualizar uma notícia com sucesso.', async () => {});
+
+        it('Deve lançar erro 400 por ID inválido.', async () => {
+            const invalidId = 'invalidId';
+            const newsInput = newsCreateFactory();
+
+            const response = await request(app)
+                .put(`/v1/news/${invalidId}`)
+                .send(newsInput);
+
+            expect(response.status).toBe(400);
+            expect(response.body).toContain(MESSAGES_ERROR.GENERAL.INVALID_ID);
+        });
+
+        it('Deve lançar erro 404 por ID não encontrado.', async () => {
+            const notFoundId = new mongoose.Types.ObjectId(); 
+            const newsInput = newsCreateFactory();
+            
+            const response = await request(app)
+                .put(`/v1/news/${notFoundId}`)
+                .send(newsInput);
+
+            expect(response.status).toBe(404);
+            expect(response.body).toContain(MESSAGES_ERROR.NEWS.NOT_FOUND);
+        });
+    });
+
+    describe('Search', () => {
+
+
     });
 });

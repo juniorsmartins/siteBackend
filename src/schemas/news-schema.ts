@@ -34,10 +34,10 @@ noticiaSchema.index({ linkOriginal: 1 });
 noticiaSchema.index({ titulo: 1 });
 
 export type NewsSchemaType = InferSchemaType<typeof noticiaSchema>;
-export type NewsLean = NewsSchemaType & { _id: Types.ObjectId };
+export type NewsLean = NewsSchemaType & { _id: Types.ObjectId }; // saída 
 export type NewsCreateData =
     Pick<NewsSchemaType, 'chapeu' | 'titulo' | 'linhaFina' | 'conteudo' | 'autor' | 'imagemUrl' | 'editoria'> &
-    Partial<Pick<NewsSchemaType, 'imagemLegenda' | 'linkOriginal' | 'destaquePrincipal' | 'destaqueSecundario'>>;
+    Partial<Pick<NewsSchemaType, 'imagemLegenda' | 'linkOriginal' | 'destaquePrincipal' | 'destaqueSecundario'>>; // entrada
 
 // Cria o modelo de notícia a partir do schema
 const News = mongoose.model("Noticia", noticiaSchema);
