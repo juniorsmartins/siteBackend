@@ -6,7 +6,7 @@ import { validarFormatoId } from '../../utils/utils.ts';
 
 export class NewsGetService {
 
-    public async buscarPorId(id: string): Promise<NewsLean | null> {
+    public async findById(id: string): Promise<NewsLean | null> {
 
         validarFormatoId(id);
         

@@ -4,7 +4,7 @@ import { verificarExisteNewsPorId } from '../../utils/news-utils.ts';
 
 export class NewsDeleteService {
 
-    public async deletarPorId(id: string): Promise<string> {
+    public async deleteById(id: string): Promise<string> {
 
         validarFormatoId(id);
         await verificarExisteNewsPorId(id);

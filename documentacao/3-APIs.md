@@ -43,7 +43,11 @@
     3.3. Versionamento por header (cabeçalho): Accept: application/vnd.example+json;api-version=1
     3.4. Versionamento via payload da mensagem: { "version": "v1", data: {...} }
     3.5. Outras: versionamento semântico; versionamento por calendário; versionamento por hash.
-4. 
+4. Compressão: à medida que os dados crescem, o custo de transferência entre sistemas também aumenta e pode afetar a experiência do usuário. Talvez isso não seja perceptível em escala de megabytes, mas, conforme os dados se expandem para gigabytes ou mais, o tempo e o custo envolvidos na movimentação de dados pode se tornar problemático. Por conta disso, esses dados podem ser comprimidos em texto ou em binários. Exemplos de formatos em texto: ASCII, UTF-8, XML, JSON e YAML. Exemplos de formatos em binário (mais eficiente): [Apache Avro](https://avro.apache.org/), Amazon Ion, MessagePack, Protocol Buffers e Apache Thrift.  
+5. Filtragem: a filtragem permite recuperar dados específicos a partir de um conjunto de dados maior, com base em condições de seleção. Em APIs Rest, a forma mais comum de aplicar filtragem é adicionar critérios como parâmetros de consulta ao URI. Ex: https://example.com/api/v1/books?language=en. E existem duas principais abordagens para transferir critérios de filtragem à API: 
+    5.1. A primeira utiliza uma string de filtro, que é enviada à API dentro do parâmetro de consulta. O formato dessa string depende da tecnologia de armazenamento utilizada. Por exemplo, se for banco de dados SQL, "country='Denmark' AND snowfall >= 0.5 AND rain >= 0.1". Claro, isso será sanitizado, controlado e interpretado para evitar ataques por injeção de SQL.
+    5.2. A segunda abordagem (mais comum), conhecida como filtragem por campo, utiliza dados de filtragem enviados à API como parâmetros de consulta. Por exemplo: /api/v1/books?country=Denmark&snowfall>=0.5&rain>=0.1.
+6. 
 
 
 

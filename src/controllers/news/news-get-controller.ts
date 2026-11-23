@@ -8,11 +8,11 @@ export class NewsGetController {
      * Pesquisar - Get para pesquisar, com filtros, vários registros paginados
      */
 
-    public async buscarPorId(req: Request<{ id: string }>, res: Response, next: NextFunction): Promise<void> {
+    public async findById(req: Request<{ id: string }>, res: Response, next: NextFunction): Promise<void> {
 
         try {
             const { id } = req.params;
-            const resposta = await new NewsGetService().buscarPorId(id);
+            const resposta = await new NewsGetService().findById(id);
 
             res.status(200).json(resposta);
 
