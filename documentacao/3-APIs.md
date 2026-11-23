@@ -85,13 +85,13 @@
 
 
 
-## Documentações de referência
+## Referências
 
 1. [Guia de design de APIs do Google](https://google.aip.dev/1); 
 2. [Guia de projeto da API do Google](https://docs.cloud.google.com/apis/design?hl=pt-br);
 3. [Diretrizes de design de APIs Rest da Microsoft](https://learn.microsoft.com/pt-br/azure/architecture/best-practices/api-design);
 4. [Rest API tutorial](https://restapitutorial.com/);
 5. [Restful API tutorial](https://restfulapi.net/);
-6. [Livro: Dominando Estilos de APIs](https://www.amazon.com.br/dp/857522980X?lv=shuf&hvlocphy=9101913&hvptwo=&hvnetw=g&mcid=&hvext=432675436952&hvadid=829364749849&language=pt_BR&hvpone=&hvlocint=&hvcampaign=24393919600&hydadcr=22379_13865195_2561052&hvpos=&hvdev=c&hvdvcmdl=&hvocijid=11381303359229873392--&hvqmt=a&hvexpln=0&tag=smgoogbrddspts-20&hvtargid=kwl-2484167636399&adgrpid=204141566089&hvrand=11381303359229873392&channelId=425&ref_=&plpRedirect=mhFallback&th=1);
+6. [Livro: Dominando Estilos de APIs](https://m.media-amazon.com/images/I/71+n66Bbt3L.jpg);
 
 
