@@ -10,11 +10,11 @@ export class NewsGetService {
 
         validateFormatId(id);
         
-        const news = await newsRepository.findById(id);
-        if (!news) {
+        const newsFound = await newsRepository.findById(id);
+        if (!newsFound) {
             throw new AppError(MESSAGES_ERROR.NEWS.NOT_FOUND, 404);
         }
 
-        return news;
+        return newsFound;
     }
 }
