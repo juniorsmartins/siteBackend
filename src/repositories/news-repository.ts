@@ -1,5 +1,5 @@
 import { News } from '../schemas/news-schema.ts';
-import type { NewsLean, NewsCreateData } from '../schemas/news-schema.ts';
+import type { NewsOutputLean, NewsInputData } from '../schemas/news-schema.ts';
 import type { QueryFilter, Types } from 'mongoose';
 
 type Id = string | Types.ObjectId;
@@ -10,25 +10,25 @@ export const newsRepository = {
     // CRUD
     // ---------------------------------------------------------------------
 
-    async create(dadosNoticia: NewsCreateData): Promise<NewsLean> {
-        const noticia = await News.create(dadosNoticia);
-        return noticia.toObject() as NewsLean;
+    async create(newsInput: NewsInputData): Promise<NewsOutputLean> {
+        const noticia = await News.create(newsInput);
+        return noticia.toObject() as NewsOutputLean;
     },
 
-    async buscarPorId(id: Id): Promise<NewsLean | null> {
-        return await News.findById(id).lean<NewsLean>();
+    async findById(id: Id): Promise<NewsOutputLean | null> {
+        return await News.findById(id).lean<NewsOutputLean>();
     },
 
-    // async atualizar(id, dadosAtualizacao) {
-    //     return await News.findByIdAndUpdate(
-    //         id,
-    //         { $set: dadosAtualizacao },
-    //         { new: true, runValidators: true }
-    //     ).lean();
-    // },
+    async updateById(id: Id, newsInput: Partial<NewsInputData>): Promise<NewsOutputLean | null> {
+        return await News.findByIdAndUpdate(
+            id,
+            { $set: newsInput },
+            { new: true, runValidators: true } 
+        ).lean<NewsOutputLean>(); 
+    },
 
-    async deletarPorId(id: Id): Promise<NewsLean | null> {
-        return await News.findByIdAndDelete(id).lean();
+    async deleteById(id: Id): Promise<NewsOutputLean | null> {
+        return await News.findByIdAndDelete(id).lean<NewsOutputLean>();
     },
 
 
@@ -37,7 +37,7 @@ export const newsRepository = {
     // ---------------------------------------------------------------------
 
     async existePorId(id: Id): Promise<boolean> {
-        const resultado = await News.exists({ _id: id }).lean();
+        const resultado = await News.exists({ _id: id });
         return !!resultado;
     },
 

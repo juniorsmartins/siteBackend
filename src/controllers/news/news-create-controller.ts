@@ -6,10 +6,10 @@ export class NewsCreateController {
     public async create(req: Request, res: Response, next: NextFunction): Promise<void> {
 
         try {
-            const dadosNoticia = req.body;
-            const resposta = await new NewsCreateService().create(dadosNoticia);
+            const newsInput = req.body;
+            const newsCreated = await new NewsCreateService().create(newsInput);
 
-            res.status(201).json(resposta);
+            res.status(201).json(newsCreated);
 
         } catch (error) {
             next(error);

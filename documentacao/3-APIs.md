@@ -40,6 +40,7 @@
 2. **Nomenclatura de APIs**: em uma API Rest, a norma é adotar nomes orientados a recursos (dados) e no plural. Ex: /orders/123. Por outro lado, APIs de GraphQL, gRPC ou Brokers normalmente seguem uma abordagem orientada à finalidade, o que possibilita maior flexibilidade permitindo o uso tanto de nomes no singular quanto no plural. 
 
 3. **Versionamento (ou controle de versão)**: APIs estão em constante mudança e evolução. Por isso, precisamos levar o versionamento em consideração, de modo a permitir que atendam a todos os seus usuários à medida que as mudanças ocorrem. Há várias abordagens de versionamento:
+
     3.1. Versionamento por caminho (URI): /v1/orders/123.
     3.2. Versionamento por parâmetro de consulta: /orders?api-version=v1 ou /orders?resource-version=4.2.3
     3.3. Versionamento por header (cabeçalho): Accept: application/vnd.example+json;api-version=1
@@ -49,10 +50,23 @@
 4. **Compressão**: à medida que os dados crescem, o custo de transferência entre sistemas também aumenta e pode afetar a experiência do usuário. Talvez isso não seja perceptível em escala de megabytes, mas, conforme os dados se expandem para gigabytes ou mais, o tempo e o custo envolvidos na movimentação de dados pode se tornar problemático. Por conta disso, esses dados podem ser comprimidos em texto ou em binários. Exemplos de formatos em texto: ASCII, UTF-8, XML, JSON e YAML. Exemplos de formatos em binário (mais eficiente): [Apache Avro](https://avro.apache.org/), Amazon Ion, MessagePack, [Protocol Buffers](https://protobuf.dev/) e [Apache Thrift](https://thrift.apache.org/).  
 
 5. **Filtragem**: a filtragem permite recuperar dados específicos a partir de um conjunto de dados maior, com base em condições de seleção. Em APIs Rest, a forma mais comum de aplicar filtragem é adicionar critérios como parâmetros de consulta ao URI. Ex: https://example.com/api/v1/books?language=en. E existem duas principais abordagens para transferir critérios de filtragem à API: 
+
     5.1. A primeira utiliza uma string de filtro, que é enviada à API dentro do parâmetro de consulta. O formato dessa string depende da tecnologia de armazenamento utilizada. Por exemplo, se for banco de dados SQL, "country='Denmark' AND snowfall >= 0.5 AND rain >= 0.1". Claro, isso será sanitizado, controlado e interpretado para evitar ataques por injeção de SQL.
+
     5.2. A segunda abordagem (mais comum), conhecida como filtragem por campo, utiliza dados de filtragem enviados à API como parâmetros de consulta. Por exemplo: /api/v1/books?country=Denmark&snowfall>=0.5&rain>=0.1.
 
-6. 
+6. **Contagem e Ordenação**: a contagem serve para determinar o número total de registros. A ordenação organiza dadps em ordem crescente ou decrescente, utilizando propriedades como tempo, nome ou números.
+
+7. **Paginação**: é um padrão de design que busca resolver o problema de carregamento de grandes volumes de dados em páginas. Cada página contém um subconjunto dos dados, determinado pelo tamanho da página (número de itens) e funcionando como uma janela sobre o conjunto ao exibir apenas uma parte dos dados por vez. Diversas abordagens podem ser adotadas para implementar a paginação, mas as mais comuns são: 
+
+    7.1. Paginação baseada em deslocamento (offset-based): há duas variações dessa técnica, a primeira utiliza o número de páginas como parâmetro de consulta de requisição. O valor de page nos campos de next e previous é incrementado e decrementado em uma unidade e o campo count indica a quantidade total de objetos no conjunto de dados. A segunda variação utiliza os parâmetros de consulta limit e offset. O parâmetro limit define a quantidade total de itens a ser retornada, enquanto o offset indica o ponto de início dos resultados em relação ao conjunto completo de itens não paginados. A principal vantagem é permitir que os clientes estimem o número total de páginas e tenha acesso direto a uma página específica. Por outro lado, pode se tornar ineficiente em conjuntos de dados muito grandes, resultando em tempos de resposta mais lentos. Outro problema é quando há exclusões ou inserções de itens, pois itens podem deixar de aparecer ou serem repetidos na página seguinte. (livro1: pág.77)
+
+    7.2. Paginação baseada em cursor (cursor-based): utiliza um cursor (ponteiro) para indicar a posição dentro do conjunto de dados. Esse cursor precisa ser um valor único e sequencial para permitir ordenação, como uma chave primária de banco de dados. Ele é codificado e aparece como um token que não é compreendido pelo cliente, mas que a API consegue interpretar. A API sabe como decodificar o cursor e utilizá-lo para navegar pelo banco de dados. (livro1: pág.78)
+
+8. **Tarefas de longa duração**: em geral, clientes e servidores de API utilizam tempos limites (timeouts) predefinidos para evitar espeas indefinidas. Esse mecanismo é eficar apenas para tarefas com duração de processamento relativamente curta, e falha em cenários onde o tempo de execução excede o timeout, como no processamento de grandes volumes de dados ou em transformações de vídeo. Nesses casos, o padrão de tarefa de longa duração (long-running operations) pode ser uma solução útil. Nessa abordagem, o cliente envia uma requisição que dispara o processamento da tarefa. Em vez de retornar o resultado do processamento, a API retorna um identificador único da tarefa, que o cliente usa para consultar seu status (progresso). Quando aceita, a API Rest deve retornar o código de status 202 (accepted). Uma maneira de expor a tarefa é definir um recurso no nível superior da API, como /api/v1/tasks.
+
+9. 
+
 
 
 ## Práticas de Segurança
@@ -92,6 +106,6 @@
 3. [Diretrizes de design de APIs Rest da Microsoft](https://learn.microsoft.com/pt-br/azure/architecture/best-practices/api-design);
 4. [Rest API tutorial](https://restapitutorial.com/);
 5. [Restful API tutorial](https://restfulapi.net/);
-6. [Livro: Dominando Estilos de APIs](https://m.media-amazon.com/images/I/71+n66Bbt3L.jpg);
+6. [Livro1: Dominando Estilos de APIs](https://m.media-amazon.com/images/I/71+n66Bbt3L.jpg);
 
 

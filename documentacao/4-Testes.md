@@ -13,11 +13,11 @@
 #instalar biblioteca de testes unitários
 npm instal -D vitest
 
-# instalar biblioteca de testes de integração
+# instalar biblioteca de testes de integração e tipagem
 npm install -D supertest
 npm install -D @types/supertest
 
-# instalar banco em memória para testar MongoDB/Mongoose
+# instalar banco em memória para testar MongoDB/Mongoose e adiciona aprovação no script
 npm install -D mongodb-memory-server
 npm approve-scripts mongodb-memory-server
 
