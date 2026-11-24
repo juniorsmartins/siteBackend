@@ -8,11 +8,11 @@ export class NewsDeleteController {
 
         try {
             const { id } = req.params;
-            const resposta = await new NewsDeleteService().deleteById(id);
+            const idDeleted = await new NewsDeleteService().deleteById(id);
 
             res.status(200).json({
                 message: MESSAGES_SUCCESS.NEWS.DELETED,
-                idDeleted: resposta
+                idDeleted: idDeleted
             });
 
         } catch (error) {

@@ -4,7 +4,7 @@ import { app } from '../server.ts';
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 import { newsRepository } from '../repositories/news-repository.ts';
 import { connectInMemoryMongoDB, clearInMemoryMongoDB, disconnectInMemoryMongoDB } from './mongodb-in-memory.ts';
-import { newsCreateFactory } from './factories.ts';
+import { newsFactory } from './factories.ts';
 import { MESSAGES_ERROR } from '../errors/messages-error.ts';
 import { MESSAGES_SUCCESS } from '../configs/messages-success-config.ts';
 import { NEWS_RULES } from "../configs/constants-config.ts"; 
@@ -19,7 +19,7 @@ describe('News Integration Tests', () => {
 
         it('Deve buscar uma notícia com sucesso.', async () => {
 
-            const newsInput = newsCreateFactory();
+            const newsInput = newsFactory();
             const newsCreated = await newsRepository.create(newsInput);
 
             const response = await request(app)
@@ -64,10 +64,10 @@ describe('News Integration Tests', () => {
         });
     });
 
-    describe('Delete', () => {
+    describe('DeleteById', () => {
 
         it('Deve deletar uma notícia com sucesso.', async () => {
-            const newsInput = newsCreateFactory();
+            const newsInput = newsFactory();
             const newsCreated = await newsRepository.create(newsInput);
 
             const response = await request(app)
@@ -101,7 +101,7 @@ describe('News Integration Tests', () => {
     describe('Create', () => {
 
         it('Deve criar uma notícia com sucesso.', async () => {
-            const newsInput = newsCreateFactory();
+            const newsInput = newsFactory();
 
             const response = await request(app)
                 .post('/v1/news')
@@ -129,7 +129,7 @@ describe('News Integration Tests', () => {
         });
 
         it('Deve lançar erro 400 por dados inválidos - Schema Validation.', async () => {
-            const newsInput = newsCreateFactory();
+            const newsInput = newsFactory();
             newsInput.chapeu = 'C2tre T78911 Yasd43gpoer Ghut'; // Tornando o chapéu inválido para gerar erro 400
             newsInput.titulo = 'T'; // Tornando o título inválido para gerar erro 400
             newsInput.linhaFina = 'L'; // Tornando a linha fina inválida para gerar erro 400
@@ -149,26 +149,64 @@ describe('News Integration Tests', () => {
         });
     });
 
-    describe('Update', () => {
+    describe('UpdateById', () => {
 
-        it('Deve atualizar uma notícia com sucesso.', async () => {});
+        it('Deve atualizar uma notícia com sucesso.', async () => {
+            const newsInput = newsFactory();
+            const newsCreated = await newsRepository.create(newsInput);
+
+            const newsUpdate = newsFactory({ 
+                chapeu: 'Chapéu Atualizado', 
+                titulo: 'Título Atualizado', 
+                linhaFina: 'Linha Fina Atualizada', 
+                conteudo: 'Conteúdo Atualizado Conteúdo Atualizado Conteúdo Atualizado Conteúdo Atualizado Conteúdo Atualizado Conteúdo Atualizado Conteúdo Atualizado Conteúdo Atualizado Conteúdo Atualizado Conteúdo Atualizado Conteúdo Atualizado Conteúdo Atualizado Conteúdo Atualizado Conteúdo Atualizado Conteúdo Atualizado Conteúdo Atualizado Conteúdo Atualizado Conteúdo Atualizado Conteúdo Atualizado Conteúdo Atualizado Conteúdo Atualizado Conteúdo Atualizado Conteúdo Atualizado Conteúdo Atualizado Conteúdo Atualizado Conteúdo Atualizado Conteúdo Atualizado Conteúdo Atualizado Conteúdo Atualizado Conteúdo Atualizado', 
+                autor: 'Autor Atualizado', 
+                imagemUrl: 'URL Atualizada', 
+                imagemLegenda: 'Legenda Atualizada', 
+                linkOriginal: 'Link Atualizado', 
+                destaquePrincipal: true, 
+                destaqueSecundario: true, 
+                editoria: 'esportes' 
+            });
+
+            const response = await request(app)
+                .put(`/v1/news/${newsCreated._id}`)
+                .send(newsUpdate);
+
+            expect(response.status).toBe(200);
+            expect(response.body).toMatchObject({
+                chapeu: newsUpdate.chapeu,
+                titulo: newsUpdate.titulo,
+                linhaFina: newsUpdate.linhaFina,
+                conteudo: newsUpdate.conteudo,
+                autor: newsUpdate.autor,
+                imagemUrl: newsUpdate.imagemUrl,
+                imagemLegenda: newsUpdate.imagemLegenda,
+                linkOriginal: newsUpdate.linkOriginal,
+                destaquePrincipal: newsUpdate.destaquePrincipal,
+                destaqueSecundario: newsUpdate.destaqueSecundario,
+                editoria: newsUpdate.editoria
+            });
+            expect(response.headers['content-type']).toMatch(/application\/json/);
+
+        });
 
         it('Deve lançar erro 400 por ID inválido.', async () => {
             const invalidId = 'invalidId';
-            const newsInput = newsCreateFactory();
+            const newsInput = newsFactory();
 
             const response = await request(app)
                 .put(`/v1/news/${invalidId}`)
                 .send(newsInput);
 
             expect(response.status).toBe(400);
-            expect(response.body).toContain(MESSAGES_ERROR.GENERAL.INVALID_ID);
+            expect(response.body).toBe(MESSAGES_ERROR.GENERAL.INVALID_ID);
         });
 
         it('Deve lançar erro 404 por ID não encontrado.', async () => {
             const notFoundId = new mongoose.Types.ObjectId(); 
-            const newsInput = newsCreateFactory();
-            
+            const newsInput = newsFactory();
+
             const response = await request(app)
                 .put(`/v1/news/${notFoundId}`)
                 .send(newsInput);
@@ -180,6 +218,8 @@ describe('News Integration Tests', () => {
 
     describe('Search', () => {
 
+        it('Deve pesquisar notícias com sucesso.', async () => {
 
+        });
     });
 });

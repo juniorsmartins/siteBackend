@@ -7,9 +7,9 @@ export class NewsGetController {
 
         try {
             const { id } = req.params;
-            const resposta = await new NewsGetService().findById(id);
+            const newsFind = await new NewsGetService().findById(id);
 
-            res.status(200).json(resposta);
+            res.status(200).json(newsFind);
 
         } catch (error) {
             next(error);
