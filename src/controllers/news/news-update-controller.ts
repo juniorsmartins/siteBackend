@@ -14,7 +14,6 @@ export class NewsUpdateController {
     public async updateById(request: UpdateNewsRequest, response: Response, next: NextFunction): Promise<void> {
 
         try {
-
             const { id } = request.params;
             const newsInput = request.body;
 

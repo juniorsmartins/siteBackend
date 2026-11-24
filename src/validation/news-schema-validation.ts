@@ -2,7 +2,7 @@ import { z } from "zod";
 import { NEWS_RULES } from "../configs/constants-config.ts";
 import { MESSAGES_ERROR } from "../errors/messages-error.ts";
 
-export const newsCreateSchemaValidation = z.object({
+export const newsSchemaValidation = z.object({
 
     chapeu: z.string()
         .min(NEWS_RULES.HAT.MIN, MESSAGES_ERROR.NEWS.FIELD_HAT_MIN_CARACTERES(NEWS_RULES.HAT.MIN))
