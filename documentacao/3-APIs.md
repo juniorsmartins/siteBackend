@@ -65,37 +65,51 @@
 
 8. **Tarefas de longa duração**: em geral, clientes e servidores de API utilizam tempos limites (timeouts) predefinidos para evitar espeas indefinidas. Esse mecanismo é eficar apenas para tarefas com duração de processamento relativamente curta, e falha em cenários onde o tempo de execução excede o timeout, como no processamento de grandes volumes de dados ou em transformações de vídeo. Nesses casos, o padrão de tarefa de longa duração (long-running operations) pode ser uma solução útil. Nessa abordagem, o cliente envia uma requisição que dispara o processamento da tarefa. Em vez de retornar o resultado do processamento, a API retorna um identificador único da tarefa, que o cliente usa para consultar seu status (progresso). Quando aceita, a API Rest deve retornar o código de status 202 (accepted). Uma maneira de expor a tarefa é definir um recurso no nível superior da API, como /api/v1/tasks.
 
-9. 
+9. **Duplicação de requisições**: essa duplicação pode ocorrer por cliques repetidos na interface. Para evitar os efeitos indesejados da duplicação, o cliente pode gerar um ID de requisição e incluí-lo na requisição enviada. Quando a API recebe uma requisição com o mesmo ID pela segunda vez, ela lida com a duplicação de forma adequada, por exemplo, retornando a resposta bem-sucedida anterior ou um erro. 
+
+10. **Repetição de requisições**: outro aspecto que precisamos considerar no design de uma API é o momento adequado para repetir uma requisição malsucedida. Uma requisição pode falhar por estar inválida, falha na rede, erro no servidor ou lógica incorreta na aplicação. Se a falha for causada por um problema do lado da API, a requisição original deve ser reenviada posteriormente. Há várias técnicas, por exemplo: retry storm, cutoff, [circuit breaker](https://oreil.ly/e1mZS). 
+
+11. **Limitação de taxa**: essa técnica impõe um limite ao número de requisições que um único cliente pode realizar a um mesmo endpoint dentro de um intervalo de tempo determinado. Essa abordagem também pode ser utilizada para reduzir o impacto de ataques de força bruta ou de negação de serviço (Denial of Service - DoS).
+
+12. **Cache**: é uma técnica que otimiza o ciclo de requisição-resposta ao reduzir a necessidade de o cliente buscar novamente os recursos no servidor. Ela melhora a capacidade de resposta do cliente e reduz a carga sobre o servidor. Há duas abordagens: cache do lado do cliente e cache do lado do servidor. (livro1: pág 83)
+
+13. **Exclusão**: de acordo com os princípios das APIs Rest, a exclusão de recursos pode ser feita de duas formas: soft delete (exclusão lógica) ou hard delete (exclusão física). O soft delete preserva o recurso, mas o marca como excluído. O hard delete remove o recurso do sistema. Importante: o soft delete não atende completamente aos requisitos de exclusão de dados exigidos por diversas regulamentações de proteção de dados pelo mundo. 
 
 
+## Segurança em APIs
 
-## Práticas de Segurança
+Os principais riscos de segurança listados pela OWASP podem ser agrupados em três categorias: autenticação e autorização, gerenciamento de inventário e gerenciamento de recursos. 
 
-1. **API sem estado (stateless)**: evita ataque de 'session fixation' por não ter armazenado tabelas de sessões. Porém, a segurança depende de como você guarda e revoga os tokens.
+1. **Criptografia, autenticação e autorização**: a criptografia é o meio mais comum de proteger o tráfego de uma API. Trata-se do processo de converter os dados de seu formato original, texto simples, em um texto cifrado, por meio de algoritmo e chave de criptografia. O texto cifrado não pode ser lido sem a chave de descriptografia. A criptografia do tráfego de APIs normalmente utiliza TLS, que também permite ao cliente autenticar o servidor por meio de um certificado digital emitido por uma autoridade certificadora. Em alguns casos, utiliza-se a autenticação mútua TLS (mTLS), em que cliente e servidor se autenticam mutuamente. Por fim, o TLS assegura a integridade dos dados ao verificar se não foram alterados durante a transmissão. Essa tarefa é feita com o uso de códigos de autenticação de mensagens (Message Authentication Codes - MACs). A autenticação verifica a identidade da entidade e a autorização verifica se essa entidade possui permissão de acesso aos recursos solicitados. (livro1: pág 87)
 
-2. **Métodos seguros**: GET, HEAD e OPTIONS. São seguros por não modificar recursos no servidor. Mantenha assim. 
+2. **Use HTTPS**: o HTTPS aparece no URL quando um site é protegido por um certificado [SSL/TLS](https://www.digicert.com/what-is-an-ssl-certificate). O Secure Sockets Layer (SSL) é uma tecnologia de segurança padrão para estabelecer uma conexão criptografada entre um servidor e um cliente — normalmente um servidor web (site) e um navegador, ou um servidor de e-mail e um cliente de e-mail (por exemplo, o Outlook). É mais conhecido do que o Transport Layer Security (TLS), a tecnologia sucessora do SSL. O TLS é uma versão atualizada e mais segura do SSL. 
 
 3. **Menor privilégio**: uma entidade deve ter apenas o conjunto de permissões necessárias para executar as ações para as quais está autorizada e nada mais. Permissões podem ser adicionadas conforme necessário e devem ser revogadas quando não forem mais utilizadas. 
 
 4. **Negar por padrão**: o nivel de acesso padrão de um usuário a qualquer recurso do sistema deve ser "negado", a menos que tenha recebido uma "permissão" explícita. 
 
-5. **Use HTTPS**: o HTTPS aparece no URL quando um site é protegido por um certificado [SSL/TLS](https://www.digicert.com/what-is-an-ssl-certificate). O Secure Sockets Layer (SSL) é uma tecnologia de segurança padrão para estabelecer uma conexão criptografada entre um servidor e um cliente — normalmente um servidor web (site) e um navegador, ou um servidor de e-mail e um cliente de e-mail (por exemplo, o Outlook). É mais conhecido do que o Transport Layer Security (TLS), a tecnologia sucessora do SSL. O TLS é uma versão atualizada e mais segura do SSL. 
+5. **Hash de senha**: senhas devem sempre ser criptografadas para proteger o sistema (bcrypt, argon2).
 
-6. **Hash de senha**: senhas devem sempre ser criptografadas para proteger o sistema (bcrypt, argon2).
+6. **OAuth**: delegue acesso sem compartilhar senha, com tokens de expiração curta.
 
-7. **Não divulgue informações em URLs**: nomes de usuário, senhas, tokens de sessão e chaves de API não devem aparecer na URL, pois podem ser capturados nos logs do servidor web e históricos. Ex: https://api.domain.com/user-management/users/{id}/someAction?apiKey=abcd123456789. Prefira usar cabeçalhos.
+7. **API sem estado (stateless)**: evita ataque de 'session fixation' por não ter armazenado tabelas de sessões. Porém, a segurança depende de como você guarda e revoga os tokens.
 
-8. **OAuth**: delegue acesso sem compartilhar senha, com tokens de expiração curta.
+8. **Métodos seguros**: GET, HEAD e OPTIONS. São seguros por não modificar recursos no servidor. Mantenha assim. 
 
-9. **Adicione carimbo de data/hora à solicitação**: juntamente com outros parâmetros de solicitação, você pode adicionar um carimbo de data/hora da solicitação como um cabeçalho HTTP personalizado em solicitações de API. O servidor comparará o carimbo de data/hora atual com o carimbo de data/hora da solicitação e só aceitará a solicitação se tiver ocorrido após um período razoável (30 segundos, por exemplo). Isso impedirá ataques de repetição (Replay attack) que não alterem esse registro de data e hora. 
+9. **Não divulgue informações em URLs**: nomes de usuário, senhas, tokens de sessão e chaves de API não devem aparecer na URL, pois podem ser capturados nos logs do servidor web e históricos. Ex: https://api.domain.com/user-management/users/{id}/someAction?apiKey=abcd123456789. Prefira usar cabeçalhos.
 
-10. **Validação de parâmetros de entrada**: valide os parâmetros da requisição logo no primeiro passo, antes que ela chegue à lógica da aplicação. Implemente verificações de validação rigorosas e rejeite a requisição imediatamente caso a validação falhe.
+10. **Adicione carimbo de data/hora à solicitação**: juntamente com outros parâmetros de solicitação, você pode adicionar um carimbo de data/hora da solicitação como um cabeçalho HTTP personalizado em solicitações de API. O servidor comparará o carimbo de data/hora atual com o carimbo de data/hora da solicitação e só aceitará a solicitação se tiver ocorrido após um período razoável (30 segundos, por exemplo). Isso impedirá ataques de repetição (Replay attack) que não alterem esse registro de data e hora. 
 
 11. **Segredos fora do código e do repositório**: coloque segredos no arquivo .env e avise o .gitignore. 
 
 12. **Rate limiting**: limite as requisições por cliente para barrar força bruta e abuso.
 
 13. **Responda só o necessário**; não responda requisições com o documento inteiro do banco. E não mostre o stack trace nos erros e nas mensagens genéricas.
+
+14. **Validação de parâmetros de entrada**: valide os parâmetros da requisição logo no primeiro passo, antes que ela chegue à lógica da aplicação. Implemente verificações de validação rigorosas e rejeite a requisição imediatamente caso a validação falhe.
+
+15. **Sanitização e Validação**: 
+
 
 
 
