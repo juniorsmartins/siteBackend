@@ -8,6 +8,11 @@ export const MESSAGES_ERROR = Object.freeze({
         INTERNAL_ERROR: "Ocorreu um erro interno no servidor. Tente novamente mais tarde."
     },
 
+    PAGINATION: {
+        NUM_PAGE_MUST_BE_GREATER_THAN_ZERO: "numPage deve ser maior que 0.",
+        NUM_LIMIT_ITEMS_PER_PAGE_MUST_BE_GREATER_THAN_ZERO: "numLimitItemsPerPage deve ser maior que 0."
+    },
+
     NEWS: {
         NOT_FOUND: "Notícia não encontrada.", 
         FIELD_HAT_MIN_CARACTERES: (min = NEWS_RULES.HAT.MIN) => `O chapéu deve ter no mínimo ${min} caracteres.`,
