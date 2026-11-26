@@ -105,3 +105,21 @@ export const idParamValidation = z.object({
         .refine((value) => Types.ObjectId.isValid(value), { message: MESSAGES_ERROR.GENERAL.INVALID_ID })
         .transform((value) => new Types.ObjectId(value))
 });
+
+export const searchQueryValidation = z.object({
+    section: z.string().trim().optional(),
+    title: z.string().trim().optional(),
+    subHeadLine: z.string().trim().optional(),
+
+    numPage: z.coerce.number()
+        .int({ message: MESSAGES_ERROR.PAGINATION.NUM_PAGE_MUST_BE_INTEGER })
+        .min(1, MESSAGES_ERROR.PAGINATION.NUM_PAGE_MUST_BE_GREATER_THAN_ZERO)
+        .max(NEWS_RULES.PAGINATION.NUM_PAGE_MAX, MESSAGES_ERROR.PAGINATION.NUM_PAGE_MAX(NEWS_RULES.PAGINATION.NUM_PAGE_MAX))
+        .default(NEWS_RULES.PAGINATION.DEFAULT_PAGE),
+
+    numLimitItemsPerPage: z.coerce.number()
+        .int({ message: MESSAGES_ERROR.PAGINATION.NUM_LIMIT_ITEMS_PER_PAGE_MUST_BE_INTEGER })
+        .min(1, MESSAGES_ERROR.PAGINATION.NUM_LIMIT_ITEMS_PER_PAGE_MUST_BE_GREATER_THAN_ZERO)
+        .max(NEWS_RULES.PAGINATION.NUM_LIMIT_ITEMS_PER_PAGE_MAX, MESSAGES_ERROR.PAGINATION.NUM_LIMIT_ITEMS_PER_PAGE_MAX(NEWS_RULES.PAGINATION.NUM_LIMIT_ITEMS_PER_PAGE_MAX))
+        .default(NEWS_RULES.PAGINATION.DEFAULT_LIMIT_ITEMS_PER_PAGE)
+});

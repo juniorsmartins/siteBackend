@@ -9,8 +9,13 @@ export const MESSAGES_ERROR = Object.freeze({
     },
 
     PAGINATION: {
+        NUM_PAGE_MUST_BE_INTEGER: "numPage deve ser número inteiro.",
         NUM_PAGE_MUST_BE_GREATER_THAN_ZERO: "numPage deve ser um número maior que 0.",
-        NUM_LIMIT_ITEMS_PER_PAGE_MUST_BE_GREATER_THAN_ZERO: "numLimitItemsPerPage deve ser um número maior que 0."
+        NUM_PAGE_MAX: (max = NEWS_RULES.PAGINATION.NUM_PAGE_MAX) => `numPage deve ser no máximo ${max}.`,
+        
+        NUM_LIMIT_ITEMS_PER_PAGE_MUST_BE_INTEGER: "numLimitItemsPerPage deve ser número inteiro.",
+        NUM_LIMIT_ITEMS_PER_PAGE_MUST_BE_GREATER_THAN_ZERO: "numLimitItemsPerPage deve ser um número maior que 0.",
+        NUM_LIMIT_ITEMS_PER_PAGE_MAX: (max = NEWS_RULES.PAGINATION.NUM_LIMIT_ITEMS_PER_PAGE_MAX) => `numLimitItemsPerPage deve ser no máximo ${max}.`
     },
 
     NEWS: {

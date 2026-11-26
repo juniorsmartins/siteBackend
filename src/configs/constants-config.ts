@@ -20,7 +20,9 @@ export type Editoria = (typeof EDITORIAS)[number];
 export const NEWS_RULES = Object.freeze({
     PAGINATION: {
         DEFAULT_PAGE: 1,
-        DEFAULT_LIMIT_ITEMS_PER_PAGE: 20
+        NUM_PAGE_MAX: 1000,
+        DEFAULT_LIMIT_ITEMS_PER_PAGE: 20,
+        NUM_LIMIT_ITEMS_PER_PAGE_MAX: 50,
     },
     HAT: {
         MIN: 2,

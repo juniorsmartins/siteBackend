@@ -405,6 +405,28 @@ describe('News Integration Tests', () => {
                 .toContain(MESSAGES_ERROR.PAGINATION.NUM_PAGE_MUST_BE_GREATER_THAN_ZERO);
         });
 
+        it('Deve lançar erro 400 por numPage não inteiro.', async () => {
+
+            const response = await request(app)
+                .get('/v1/news')
+                .query({ numPage: 1.5, numLimitItemsPerPage: 10 });
+            
+            expect(response.status).toBe(400);
+            expect(response.body.issues.properties["numPage"].errors)
+                .toContain(MESSAGES_ERROR.PAGINATION.NUM_PAGE_MUST_BE_INTEGER);
+        });
+
+        it('Deve lançar erro 400 por numPage acima do limite máximo.', async () => {
+
+            const response = await request(app)
+                .get('/v1/news')
+                .query({ numPage: NEWS_RULES.PAGINATION.NUM_PAGE_MAX + 1, numLimitItemsPerPage: 10 });
+            
+            expect(response.status).toBe(400);
+            expect(response.body.issues.properties["numPage"].errors)
+                .toContain(MESSAGES_ERROR.PAGINATION.NUM_PAGE_MAX(NEWS_RULES.PAGINATION.NUM_PAGE_MAX));
+        });
+
         it('Deve lançar erro 400 por numLimitItemsPerPage negativo.', async () => {
 
             const response = await request(app)
@@ -414,6 +436,28 @@ describe('News Integration Tests', () => {
             expect(response.status).toBe(400);
             expect(response.body.issues.properties["numLimitItemsPerPage"].errors)
                 .toContain(MESSAGES_ERROR.PAGINATION.NUM_LIMIT_ITEMS_PER_PAGE_MUST_BE_GREATER_THAN_ZERO);
+        });
+
+        it('Deve lançar erro 400 por numLimitItemsPerPage não inteiro.', async () => {
+
+            const response = await request(app)
+                .get('/v1/news')
+                .query({ numPage: 1, numLimitItemsPerPage: 2.5 });
+            
+            expect(response.status).toBe(400);
+            expect(response.body.issues.properties["numLimitItemsPerPage"].errors)
+                .toContain(MESSAGES_ERROR.PAGINATION.NUM_LIMIT_ITEMS_PER_PAGE_MUST_BE_INTEGER);
+        });
+
+        it('Deve lançar erro 400 por numLimitItemsPerPage acima do limite máximo.', async () => {
+
+            const response = await request(app)
+                .get('/v1/news')
+                .query({ numPage: 1, numLimitItemsPerPage: NEWS_RULES.PAGINATION.NUM_LIMIT_ITEMS_PER_PAGE_MAX + 1 });
+            
+            expect(response.status).toBe(400);
+            expect(response.body.issues.properties["numLimitItemsPerPage"].errors)
+                .toContain(MESSAGES_ERROR.PAGINATION.NUM_LIMIT_ITEMS_PER_PAGE_MAX(NEWS_RULES.PAGINATION.NUM_LIMIT_ITEMS_PER_PAGE_MAX));
         });
     });
 });
