@@ -49,7 +49,7 @@ describe('News Integration Tests', () => {
                 .get(`/v1/news/${'id-invalido'}`);
 
             expect(response.status).toBe(400);
-            expect(response.body).toContain(MESSAGES_ERROR.GENERAL.INVALID_ID);
+            expect(response.body.issues.properties["id"].errors).toContain(MESSAGES_ERROR.GENERAL.INVALID_ID);
 
         });
 
@@ -84,7 +84,7 @@ describe('News Integration Tests', () => {
                 .delete(`/v1/news/${'id-invalido'}`);
 
             expect(response.status).toBe(400);
-            expect(response.body).toContain(MESSAGES_ERROR.GENERAL.INVALID_ID);
+            expect(response.body.issues.properties["id"].errors).toContain(MESSAGES_ERROR.GENERAL.INVALID_ID);
         });
 
         it('Deve lançar erro 404 por ID não encontrado.', async () => {
@@ -255,7 +255,7 @@ describe('News Integration Tests', () => {
                 .send(newsInput);
 
             expect(response.status).toBe(400);
-            expect(response.body).toBe(MESSAGES_ERROR.GENERAL.INVALID_ID);
+            expect(response.body.issues.properties["id"].errors).toContain(MESSAGES_ERROR.GENERAL.INVALID_ID);
         });
 
         it('Deve lançar erro 404 por ID não encontrado.', async () => {

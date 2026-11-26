@@ -2,10 +2,11 @@ import type { NewsInputData, NewsOutputLean } from '../../schemas/news-schema.ts
 import { newsRepository } from '../../repositories/news-repository.ts';
 import { AppError } from '../../errors/app-error.ts';
 import { MESSAGES_ERROR } from '../../errors/messages-error.ts';
+import type { Types } from 'mongoose';
 
 export class NewsUpdateService {
 
-    public async updateById(id: string, newsInput: Partial<NewsInputData>): Promise<NewsOutputLean | null> {
+    public async updateById(id: Types.ObjectId, newsInput: Partial<NewsInputData>): Promise<NewsOutputLean | null> {
 
         const newsUpdated = await newsRepository.updateById(id, newsInput);
         if(!newsUpdated) {

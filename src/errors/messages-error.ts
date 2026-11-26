@@ -9,8 +9,8 @@ export const MESSAGES_ERROR = Object.freeze({
     },
 
     PAGINATION: {
-        NUM_PAGE_MUST_BE_GREATER_THAN_ZERO: "numPage deve ser maior que 0.",
-        NUM_LIMIT_ITEMS_PER_PAGE_MUST_BE_GREATER_THAN_ZERO: "numLimitItemsPerPage deve ser maior que 0."
+        NUM_PAGE_MUST_BE_GREATER_THAN_ZERO: "numPage deve ser um número maior que 0.",
+        NUM_LIMIT_ITEMS_PER_PAGE_MUST_BE_GREATER_THAN_ZERO: "numLimitItemsPerPage deve ser um número maior que 0."
     },
 
     NEWS: {

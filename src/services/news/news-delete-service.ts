@@ -1,10 +1,11 @@
 import { newsRepository } from '../../repositories/news-repository.ts';
 import { AppError } from '../../errors/app-error.ts';
 import { MESSAGES_ERROR } from '../../errors/messages-error.ts';
+import type { Types } from 'mongoose';
 
 export class NewsDeleteService {
 
-    public async deleteById(id: string): Promise<string> {
+    public async deleteById(id: Types.ObjectId): Promise<Types.ObjectId> {
 
         const newsDeleted = await newsRepository.deleteById(id);
         if(!newsDeleted) {

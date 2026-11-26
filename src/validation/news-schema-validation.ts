@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { NEWS_RULES } from "../configs/constants-config.ts";
 import { MESSAGES_ERROR } from "../errors/messages-error.ts";
+import { Types } from 'mongoose';
 
 export const newsSchemaCreateValidation = z.object({
 
@@ -96,4 +97,11 @@ export const newsSchemaUpdateValidation = z.object({
     destaquePrincipal: z.boolean(),
 
     destaqueSecundario: z.boolean()
+});
+
+export const idParamValidation = z.object({
+    id: z.string()
+        .trim()
+        .refine((value) => Types.ObjectId.isValid(value), { message: MESSAGES_ERROR.GENERAL.INVALID_ID })
+        .transform((value) => new Types.ObjectId(value))
 });
