@@ -12,7 +12,7 @@ export class NewsSearchService {
         const filters: QueryFilter<NewsSchemaType> = {};
 
         if (section && section.trim() !== "") {
-            filters.editoria = section.trim() as EditoriaType;
+            filters.editoria = section.trim() as EditoriaType; // Cast para o tipo EditoriaType
         }
 
         if (title && title.trim() !== "") {
