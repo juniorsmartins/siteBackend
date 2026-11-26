@@ -5,16 +5,19 @@ import { NewsDeleteController } from "../controllers/news/news-delete-controller
 import { NewsUpdateController } from "../controllers/news/news-update-controller.ts";
 import { validateSchemaMiddleware } from "../middlewares/validate-schema-middleware.ts";
 import { newsSchemaValidation } from "../validation/news-schema-validation.ts";
+import { NewsSearchController } from "../controllers/news/news-search-controller.ts";
 
 const newsRouter = Router();
 const newsGetController = new NewsGetController();
 const newsDeleteController = new NewsDeleteController();
-const newsCreateController = new NewsCreateController();
 const newsUpdateController = new NewsUpdateController();
+const newsCreateController = new NewsCreateController();
+const newsSearchController = new NewsSearchController();
 
 newsRouter.get("/:id", newsGetController.findById);
 newsRouter.delete("/:id", newsDeleteController.deleteById);
-newsRouter.post("/", validateSchemaMiddleware(newsSchemaValidation), newsCreateController.create);
 newsRouter.put("/:id", validateSchemaMiddleware(newsSchemaValidation), newsUpdateController.updateById);
+newsRouter.post("/", validateSchemaMiddleware(newsSchemaValidation), newsCreateController.create);
+newsRouter.get("/", newsSearchController.searchOffsetBased);
 
 export { newsRouter };

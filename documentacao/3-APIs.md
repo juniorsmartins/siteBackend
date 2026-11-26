@@ -4,7 +4,7 @@
 
 **Estilo de API**: um paradigma que utiliza padrões, práticas e protocolos para projetar, implementar e expor APIs. Um estilo de API é formado por uma combinação de características (protocolos, restrições de design e etc). Exemplos de estilos de API: Rest/Restful, APIs de consulta (GraphQL), Feed da web (RSS e Atom), Chamada de Procedimento Remoto - RPC (gRPC), Callback (Webhooks), Bidirecional (Websocket e gRPC), API baseada em Broker (Apache ActiveMQ, Apache Kafka e RabbitMQ) e etc.
 
-**Estilo Rest/Restful**: seguem seis restrições descritas na [tese de Roy Fielding](https://oreil.ly/vNPXH). Embora muitas APIs se autodenominem Restful, na prática elas deixam de incluir links de hipermídia, que são um requisito do design de APIs Restful.  
+**Estilo Rest/Restful**: seguem seis restrições descritas na [tese de doutorado de Roy Fielding](https://oreil.ly/vNPXH), proposta no ano 2000. Embora muitas APIs se autodenominem Restful, na prática elas deixam de incluir links de hipermídia, que são um requisito do design de APIs Restful. 
 
 **Modelos de monetização de API**: pagamento por uso (pay-per-use), assinatura, freemium, taxa por transação e divisão de receita.
 
@@ -24,8 +24,11 @@
 5. **Interface Uniforme**: para obter uma interface uniforme, são necessárias múltiplas restrições arquitetônicas para orientar o comportamento dos componentes. REST é definido por quatro restrições de interface: 
 
     5.1. Identificação de recursos: os recursos individuais são identificados nas requisições usando URIs. Cada coisa tem o seu.
+
     5.2. Manipulação de recursos por meio de representações: você troca uma cópia do recurso, em um formato comum. Ex: json ou XML.
+
     5.3. Mensagens autodescritivas: a resposta explica o que aconteceu.
+
     5.4. Hipermídia: a resposta traz links para os próximos passos. É a parte que quase ninguém implementa na prática.
 
 6. **Sistema em Camadas**: REST permite usar uma arquitetura de sistema em camadas, onde você implanta as APIs no servidor A, armazena os dados no servidor B e autentica as solicitações no servidor C, por exemplo. Um cliente normalmente não consegue determinar se está conectado diretamente ao servidor final ou a um intermediário no caminho. O cliente só conhece a camada com a qual conversa. 
@@ -42,9 +45,13 @@
 3. **Versionamento (ou controle de versão)**: APIs estão em constante mudança e evolução. Por isso, precisamos levar o versionamento em consideração, de modo a permitir que atendam a todos os seus usuários à medida que as mudanças ocorrem. Há várias abordagens de versionamento:
 
     3.1. Versionamento por caminho (URI): /v1/orders/123.
+
     3.2. Versionamento por parâmetro de consulta: /orders?api-version=v1 ou /orders?resource-version=4.2.3
+
     3.3. Versionamento por header (cabeçalho): Accept: application/vnd.example+json;api-version=1
+
     3.4. Versionamento via payload da mensagem: { "version": "v1", data: {...} }
+
     3.5. Outras: versionamento semântico; versionamento por calendário; versionamento por hash.
 
 4. **Compressão**: à medida que os dados crescem, o custo de transferência entre sistemas também aumenta e pode afetar a experiência do usuário. Talvez isso não seja perceptível em escala de megabytes, mas, conforme os dados se expandem para gigabytes ou mais, o tempo e o custo envolvidos na movimentação de dados pode se tornar problemático. Por conta disso, esses dados podem ser comprimidos em texto ou em binários. Exemplos de formatos em texto: ASCII, UTF-8, XML, JSON e YAML. Exemplos de formatos em binário (mais eficiente): [Apache Avro](https://avro.apache.org/), Amazon Ion, MessagePack, [Protocol Buffers](https://protobuf.dev/) e [Apache Thrift](https://thrift.apache.org/).  
@@ -84,7 +91,7 @@ Os principais riscos de segurança listados pela OWASP podem ser agrupados em tr
 
 2. **Use HTTPS**: o HTTPS aparece no URL quando um site é protegido por um certificado [SSL/TLS](https://www.digicert.com/what-is-an-ssl-certificate). O Secure Sockets Layer (SSL) é uma tecnologia de segurança padrão para estabelecer uma conexão criptografada entre um servidor e um cliente — normalmente um servidor web (site) e um navegador, ou um servidor de e-mail e um cliente de e-mail (por exemplo, o Outlook). É mais conhecido do que o Transport Layer Security (TLS), a tecnologia sucessora do SSL. O TLS é uma versão atualizada e mais segura do SSL. 
 
-3. **Menor privilégio**: uma entidade deve ter apenas o conjunto de permissões necessárias para executar as ações para as quais está autorizada e nada mais. Permissões podem ser adicionadas conforme necessário e devem ser revogadas quando não forem mais utilizadas. 
+3. **Menor privilégio**: uma entidade deve ter apenas o conjunto de permissões necessárias para executar as ações para as quais está autorizada e nada mais. Permissões podem ser adicionadas conforme necessário e devem ser revogadas quando não forem mais utilizadas. [Mais informações](https://en.wikipedia.org/wiki/Principle_of_least_privilege) 
 
 4. **Negar por padrão**: o nivel de acesso padrão de um usuário a qualquer recurso do sistema deve ser "negado", a menos que tenha recebido uma "permissão" explícita. 
 
@@ -106,11 +113,9 @@ Os principais riscos de segurança listados pela OWASP podem ser agrupados em tr
 
 13. **Responda só o necessário**; não responda requisições com o documento inteiro do banco. E não mostre o stack trace nos erros e nas mensagens genéricas.
 
-14. **Validação de parâmetros de entrada**: valide os parâmetros da requisição logo no primeiro passo, antes que ela chegue à lógica da aplicação. Implemente verificações de validação rigorosas e rejeite a requisição imediatamente caso a validação falhe.
+14. **Sanitização e Validação**: a sanitização garante que os dados estejam em um formato seguro para processamento. Significa remover entradas indesejadas, como caracteres inesperados, ou eliminar espaços em branco no início e no fim da string de entrada. Já a validação buscar garantir que a entrada respeite as restrições e políticas definidas. Por exemplo: espera-se que os dados validados estejam dentro de um intervalo aceitável e que strings sigam o formato correto, como um CEP válido. 
 
-15. **Sanitização e Validação**: 
-
-
+15. **Mitigação de Scraping**: o scraping de dados permite que um programa extraia dados de outro programa. A forma mais comum de scraping é o web scraping, que extrai dados de sites. Outras variações envolvem a extração de dados de APIs, aplicativos de desktop ou bancos de dados. Para proteger seu site dos web crawlers mais conhecidos e "bem-comportados", você pode disponibilizar o arquivo robots.txt na raiz do servidor da API. Vale observar que o robots.txt é um padrão voluntário e nem todos os bots o respeitam. Outro padrão utilizado para proteger endpoins públicos de API consiste em evitar o uso de sequências previsíveis para identificadores de recursos. Se estes foram números inteiros, como o 1 em /api/v1/books/1, scrapers podem capturar todos os recursos apenas incrementando o identificador. Se, em vez de números inteiros, utilizarmos identificadores UUIDv4 no formato, os demais scrapers levariam muito tempo para tentar advinhar. (livro1: pág 89) 
 
 
 ## Referências

@@ -273,8 +273,125 @@ describe('News Integration Tests', () => {
 
     describe('Search', () => {
 
-        it('Deve pesquisar notícias com sucesso.', async () => {
+        it('Deve pesquisar notícias por editoria com sucesso.', async () => {
+            const news1 = newsFactory({ editoria: 'geral' });
+            const news2 = newsFactory({ editoria: 'esportes' });
+            const news3 = newsFactory({ editoria: 'economia' });
+            const news4 = newsFactory({ editoria: 'esportes' });
 
+            await newsRepository.create(news1);
+            await newsRepository.create(news2);
+            await newsRepository.create(news3);
+            await newsRepository.create(news4);
+
+            const response = await request(app)
+                .get('/v1/news')
+                .query({ section: `${news2.editoria}` });
+
+            expect(response.status).toBe(200);
+            expect(response.body.news).toHaveLength(2);
+            expect(response.body.news).toEqual(
+                expect.arrayContaining([
+                    expect.objectContaining({ section: news2.editoria })
+                ])
+            );
+            expect(response.headers['content-type']).toMatch(/application\/json/);
+        });
+
+        it('Deve pesquisar notícias por título com sucesso.', async () => {
+            const news1 = newsFactory({ titulo: 'Cuiabá Arsenal vence Crocodiles e sagra-se campeão brasileiro' });
+            const news2 = newsFactory({ titulo: 'Luladrão morre por infarto do miocárdio' });
+            const news3 = newsFactory({ titulo: 'Economia brasileira cresce 7% em 2030' });
+            const news4 = newsFactory({ titulo: 'Luladrão terá missa de sétimo dia na igreja Já Vai Tarde' });
+
+            await newsRepository.create(news1);
+            await newsRepository.create(news2);
+            await newsRepository.create(news3);
+            await newsRepository.create(news4);
+
+            const response = await request(app)
+                .get('/v1/news')
+                .query({ title: `${news2.titulo}` });
+
+            expect(response.status).toBe(200);
+            expect(response.body.news).toHaveLength(1);
+            expect(response.body.news).toEqual(
+                expect.arrayContaining([
+                    expect.objectContaining({ title: news2.titulo })
+                ])
+            );
+            expect(response.headers['content-type']).toMatch(/application\/json/);
+        });
+
+        it('Deve pesquisar notícias por linha fina com sucesso.', async () => {
+            const news1 = newsFactory({ linhaFina: 'Linha Fina 1 teste abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia' });
+            const news2 = newsFactory({ linhaFina: 'Linha Fina 2 teste abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia' });
+            const news3 = newsFactory({ linhaFina: 'Linha Fina 1 teste abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia' });
+            const news4 = newsFactory({ linhaFina: 'Linha Fina 4 teste abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia' });
+            const news5 = newsFactory({ linhaFina: 'Linha Fina 1 teste abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia' });
+
+            await newsRepository.create(news1);
+            await newsRepository.create(news2);
+            await newsRepository.create(news3);
+            await newsRepository.create(news4);
+            await newsRepository.create(news5);
+
+            const response = await request(app)
+                .get('/v1/news')
+                .query({ subHeadLine: `${news1.linhaFina}` });
+
+            expect(response.status).toBe(200);
+            expect(response.body.news).toHaveLength(3);
+            expect(response.body.news).toEqual(
+                expect.arrayContaining([
+                    expect.objectContaining({ subHeadLine: news1.linhaFina })
+                ])
+            );
+            expect(response.headers['content-type']).toMatch(/application\/json/);
+        });
+
+        it('Deve pesquisar notícias com paginação e limite de itens com sucesso I.', async () => {
+            const news1 = newsFactory({ linhaFina: 'Linha Fina 1 teste abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia' });
+            const news2 = newsFactory({ linhaFina: 'Linha Fina 2 teste abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia' });
+            const news3 = newsFactory({ linhaFina: 'Linha Fina 3 teste abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia' });
+            const news4 = newsFactory({ linhaFina: 'Linha Fina 4 teste abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia' });
+            const news5 = newsFactory({ linhaFina: 'Linha Fina 5 teste abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia' });
+
+            await newsRepository.create(news1);
+            await newsRepository.create(news2);
+            await newsRepository.create(news3);
+            await newsRepository.create(news4);
+            await newsRepository.create(news5);
+
+            const response = await request(app)
+                .get('/v1/news')
+                .query({ numPage: 1, numLimitItemsPerPage: 2 });
+            
+            expect(response.status).toBe(200);
+            expect(response.body.news).toHaveLength(2);
+            expect(response.headers['content-type']).toMatch(/application\/json/);
+        });
+
+        it('Deve pesquisar notícias com paginação e limite de itens com sucesso II.', async () => {
+            const news1 = newsFactory({ linhaFina: 'Linha Fina 1 teste abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia' });
+            const news2 = newsFactory({ linhaFina: 'Linha Fina 2 teste abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia' });
+            const news3 = newsFactory({ linhaFina: 'Linha Fina 3 teste abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia' });
+            const news4 = newsFactory({ linhaFina: 'Linha Fina 4 teste abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia' });
+            const news5 = newsFactory({ linhaFina: 'Linha Fina 5 teste abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia abcdefghijlmndaslhadoia' });
+
+            await newsRepository.create(news1);
+            await newsRepository.create(news2);
+            await newsRepository.create(news3);
+            await newsRepository.create(news4);
+            await newsRepository.create(news5);
+
+            const response = await request(app)
+                .get('/v1/news')
+                .query({ numPage: 2, numLimitItemsPerPage: 4 });
+            
+            expect(response.status).toBe(200);
+            expect(response.body.news).toHaveLength(1);
+            expect(response.headers['content-type']).toMatch(/application\/json/);
         });
     });
 });

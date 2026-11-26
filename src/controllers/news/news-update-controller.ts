@@ -1,6 +1,7 @@
 import type { Request, Response, NextFunction } from 'express';
 import type { NewsInputData } from '../../schemas/news-schema.ts';
 import { NewsUpdateService } from '../../services/news/news-update-service.ts';
+import { validateFormatId } from '../../utils/utils.ts';
 
 interface UpdateNewsRequest extends Request {
     params: {
@@ -15,6 +16,7 @@ export class NewsUpdateController {
 
         try {
             const { id } = request.params;
+            validateFormatId(id);
             const newsInput = request.body;
 
             const updatedNews = await new NewsUpdateService().updateById(id, newsInput);

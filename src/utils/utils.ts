@@ -7,3 +7,4 @@ export const validateFormatId = (id: string): void => {
         throw new AppError(MESSAGES_ERROR.GENERAL.INVALID_ID, 400);
     }
 }
+
