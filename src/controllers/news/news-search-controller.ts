@@ -14,7 +14,7 @@ interface SearchNewsRequest extends Request {
 
 export class NewsSearchController {
 
-    public async search(request: SearchNewsRequest, response: Response, next: NextFunction): Promise<void> {
+    public async searchOffsetBased(request: SearchNewsRequest, response: Response, next: NextFunction): Promise<void> {
 
         try {
             const { section, title, subHeadLine, numPage, numLimitItemsPerPage } = request.query;
@@ -22,7 +22,7 @@ export class NewsSearchController {
             const pageNumber = numPage ? parseInt(numPage, 10) : NEWS_RULES.PAGINATION.DEFAULT_PAGE; 
             const limitNumber = numLimitItemsPerPage ? parseInt(numLimitItemsPerPage, 10) : NEWS_RULES.PAGINATION.DEFAULT_LIMIT_ITEMS_PER_PAGE;
 
-            const newsPaginated = await new NewsSearchService().search({ section, title, subHeadLine,
+            const newsPaginated = await new NewsSearchService().searchOffsetBased({ section, title, subHeadLine,
                 numPage: pageNumber > 0 ? pageNumber : NEWS_RULES.PAGINATION.DEFAULT_PAGE,
                 numLimitItemsPerPage: limitNumber > 0 ? limitNumber : NEWS_RULES.PAGINATION.DEFAULT_LIMIT_ITEMS_PER_PAGE
             });

@@ -1,5 +1,5 @@
 import { News } from '../schemas/news-schema.ts';
-import type { NewsOutputLean, NewsInputData } from '../schemas/news-schema.ts';
+import type { NewsOutputLean, NewsInputData, NewsSchemaType } from '../schemas/news-schema.ts';
 import type { QueryFilter, Types } from 'mongoose';
 
 type Id = string | Types.ObjectId;
@@ -40,6 +40,46 @@ export const newsRepository = {
         const resultado = await News.exists({ _id: id });
         return !!resultado;
     },
+
+
+    // ---------------------------------------------------------------------
+    // PESQUISAS E LISTAGENS 
+    // ---------------------------------------------------------------------
+
+    async searchOffsetBased({ filters, skipPage, numLimitItemsPerPage }: 
+        { filters: QueryFilter<NewsSchemaType>; skipPage: number; numLimitItemsPerPage: number }): Promise<[NewsOutputLean[], number]> {
+
+        return await Promise.all([
+            News.find(filters)
+                .sort({ createdAt: -1 })
+                .skip(skipPage)
+                .limit(numLimitItemsPerPage)
+                .lean() as Promise<NewsOutputLean[]>, // Garante que o TS entenda o tipo do resultado (lean)
+
+            News.countDocuments(filters)
+        ]);
+    },
+
+    // async listarTodas() {
+    //     return await News.find()
+    //         .sort({ createdAt: -1 })
+    //         .lean();
+    // },
+
+    // async buscarUltimas(limite = 10) {
+    //     return await News.find()
+    //         .sort({ createdAt: -1 })
+    //         .limit(limite)
+    //         .lean();
+    // },
+
+    // async buscarPorEditoria(editoria, limite = 10) {
+    //     return await News.find({ editoria })
+    //         .sort({ createdAt: -1 })
+    //         .limit(limite)
+    //         .lean();
+    // },
+
 
     // ---------------------------------------------------------------------
     // VERIFICAÇÃO DE DUPLICIDADE (usada pela automação de importação)
@@ -82,39 +122,6 @@ export const newsRepository = {
     //     return !!resultado;
     // },
 
-    // ---------------------------------------------------------------------
-    // LISTAGEM / BUSCA
-    // ---------------------------------------------------------------------
-    // async listarTodas() {
-    //     return await News.find()
-    //         .sort({ createdAt: -1 })
-    //         .lean();
-    // },
-
-    // async pesquisarComFiltroPaginado({ filtro, pular, limitePorPagina }) {
-    //     return await Promise.all([
-    //         News.find(filtro)
-    //             .sort({ createdAt: -1 })
-    //             .skip(pular)
-    //             .limit(limitePorPagina)
-    //             .lean(),
-    //         News.countDocuments(filtro)
-    //     ]);
-    // },
-
-    // async buscarUltimas(limite = 10) {
-    //     return await News.find()
-    //         .sort({ createdAt: -1 })
-    //         .limit(limite)
-    //         .lean();
-    // },
-
-    // async buscarPorEditoria(editoria, limite = 10) {
-    //     return await News.find({ editoria })
-    //         .sort({ createdAt: -1 })
-    //         .limit(limite)
-    //         .lean();
-    // },
 
     // ---------------------------------------------------------------------
     // DESTAQUES

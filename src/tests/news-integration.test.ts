@@ -273,7 +273,38 @@ describe('News Integration Tests', () => {
 
     describe('Search', () => {
 
-        it('Deve pesquisar notícias com sucesso.', async () => {
+        it('Deve pesquisar notícias por editoria com sucesso.', async () => {
+            const news1 = newsFactory({ editoria: 'geral' });
+            const news2 = newsFactory({ editoria: 'esportes' });
+            const news3 = newsFactory({ editoria: 'economia' });
+
+            await newsRepository.create(news1);
+            await newsRepository.create(news2);
+            await newsRepository.create(news3);
+
+            const response = await request(app)
+                .get('/v1/news')
+                .query({ section: `${news2.editoria}` });
+
+            expect(response.status).toBe(200);
+            expect(response.body.news).toEqual(
+                expect.arrayContaining([
+                    expect.objectContaining({ section: news2.editoria })
+                ])
+            );
+
+
+        });
+
+        it('Deve pesquisar notícias por título com sucesso.', async () => {
+
+        });
+
+        it('Deve pesquisar notícias por linha fina com sucesso.', async () => {
+
+        });
+
+        it('Deve pesquisar notícias com paginação e limite de itens com sucesso.', async () => {
 
         });
     });
