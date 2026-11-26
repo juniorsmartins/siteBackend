@@ -1,8 +1,7 @@
 import type { QueryFilter } from 'mongoose';
 import { newsRepository } from '../../repositories/news-repository.ts';
 import type { NewsOutputLean, NewsSchemaType } from '../../schemas/news-schema.ts';
-
-type EditoriaType = NewsSchemaType['editoria'];
+import type { EditoriaType } from '../../types/editoria-type.ts';
 
 export class NewsSearchService {
 

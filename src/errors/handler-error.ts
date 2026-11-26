@@ -5,7 +5,7 @@ import { MESSAGES_ERROR } from "./messages-error.ts";
 
 export function errorHandler(error: any, request: Request, response: Response, next: NextFunction): any {
 
-    // Erros do Zod (validação de dados)
+    // Erros do Zod (validação)
     if (error instanceof ZodError) {
         return response.status(400).json({ 
             message: MESSAGES_ERROR.GENERAL.DATA_VALIDATION_ERRORS,
