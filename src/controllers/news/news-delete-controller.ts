@@ -1,18 +1,18 @@
 import type { Request, Response, NextFunction } from "express";
 import { NewsDeleteService } from "../../services/news/news-delete-service.ts";
 import { MESSAGES_SUCCESS } from "../../configs/messages-success-config.ts";
-import { validateFormatId } from "../../utils/utils.ts";
+import { idParamValidation } from "../../validation/news-schema-validation.ts";
 
 export class NewsDeleteController {
 
-    public async deleteById(req: Request<{ id: string }>, res: Response, next: NextFunction): Promise<void> {
+    public async deleteById(request: Request, response: Response, next: NextFunction): Promise<void> {
 
         try {
-            const { id } = req.params;
-            validateFormatId(id);
+            const { id } = idParamValidation.parse(request.params);
+
             const idDeleted = await new NewsDeleteService().deleteById(id);
 
-            res.status(200).json({
+            response.status(200).json({
                 message: MESSAGES_SUCCESS.NEWS.DELETED,
                 idDeleted: idDeleted
             });

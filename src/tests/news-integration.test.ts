@@ -49,7 +49,7 @@ describe('News Integration Tests', () => {
                 .get(`/v1/news/${'id-invalido'}`);
 
             expect(response.status).toBe(400);
-            expect(response.body).toContain(MESSAGES_ERROR.GENERAL.INVALID_ID);
+            expect(response.body.issues.properties["id"].errors).toContain(MESSAGES_ERROR.GENERAL.INVALID_ID);
 
         });
 
@@ -84,7 +84,7 @@ describe('News Integration Tests', () => {
                 .delete(`/v1/news/${'id-invalido'}`);
 
             expect(response.status).toBe(400);
-            expect(response.body).toContain(MESSAGES_ERROR.GENERAL.INVALID_ID);
+            expect(response.body.issues.properties["id"].errors).toContain(MESSAGES_ERROR.GENERAL.INVALID_ID);
         });
 
         it('Deve lançar erro 404 por ID não encontrado.', async () => {
@@ -255,7 +255,7 @@ describe('News Integration Tests', () => {
                 .send(newsInput);
 
             expect(response.status).toBe(400);
-            expect(response.body).toBe(MESSAGES_ERROR.GENERAL.INVALID_ID);
+            expect(response.body.issues.properties["id"].errors).toContain(MESSAGES_ERROR.GENERAL.INVALID_ID);
         });
 
         it('Deve lançar erro 404 por ID não encontrado.', async () => {
@@ -392,6 +392,28 @@ describe('News Integration Tests', () => {
             expect(response.status).toBe(200);
             expect(response.body.news).toHaveLength(1);
             expect(response.headers['content-type']).toMatch(/application\/json/);
+        });
+
+        it('Deve lançar erro 400 por numPage negativo.', async () => {
+
+            const response = await request(app)
+                .get('/v1/news')
+                .query({ numPage: -1, numLimitItemsPerPage: 10 });
+            
+            expect(response.status).toBe(400);
+            expect(response.body.issues.properties["numPage"].errors)
+                .toContain(MESSAGES_ERROR.PAGINATION.NUM_PAGE_MUST_BE_GREATER_THAN_ZERO);
+        });
+
+        it('Deve lançar erro 400 por numLimitItemsPerPage negativo.', async () => {
+
+            const response = await request(app)
+                .get('/v1/news')
+                .query({ numPage: 1, numLimitItemsPerPage: -4 });
+            
+            expect(response.status).toBe(400);
+            expect(response.body.issues.properties["numLimitItemsPerPage"].errors)
+                .toContain(MESSAGES_ERROR.PAGINATION.NUM_LIMIT_ITEMS_PER_PAGE_MUST_BE_GREATER_THAN_ZERO);
         });
     });
 });

@@ -2,8 +2,6 @@ import { News } from '../schemas/news-schema.ts';
 import type { NewsOutputLean, NewsInputData, NewsSchemaType } from '../schemas/news-schema.ts';
 import type { QueryFilter, Types } from 'mongoose';
 
-type Id = string | Types.ObjectId;
-
 export const newsRepository = {
 
     // ---------------------------------------------------------------------
@@ -15,11 +13,11 @@ export const newsRepository = {
         return noticia.toObject() as NewsOutputLean;
     },
 
-    async findById(id: Id): Promise<NewsOutputLean | null> {
+    async findById(id: Types.ObjectId): Promise<NewsOutputLean | null> {
         return await News.findById(id).lean<NewsOutputLean>();
     },
 
-    async updateById(id: Id, newsInput: Partial<NewsInputData>): Promise<NewsOutputLean | null> {
+    async updateById(id: Types.ObjectId, newsInput: Partial<NewsInputData>): Promise<NewsOutputLean | null> {
         return await News.findByIdAndUpdate(
             id,
             { $set: newsInput },
@@ -27,7 +25,7 @@ export const newsRepository = {
         ).lean<NewsOutputLean>(); 
     },
 
-    async deleteById(id: Id): Promise<NewsOutputLean | null> {
+    async deleteById(id: Types.ObjectId): Promise<NewsOutputLean | null> {
         return await News.findByIdAndDelete(id).lean<NewsOutputLean>();
     },
 
@@ -36,7 +34,7 @@ export const newsRepository = {
     // VERIFICAÇÕES
     // ---------------------------------------------------------------------
 
-    async existePorId(id: Id): Promise<boolean> {
+    async existePorId(id: Types.ObjectId): Promise<boolean> {
         const resultado = await News.exists({ _id: id });
         return !!resultado;
     },

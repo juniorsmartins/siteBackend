@@ -1,8 +1,9 @@
 import { z } from "zod";
 import { NEWS_RULES } from "../configs/constants-config.ts";
 import { MESSAGES_ERROR } from "../errors/messages-error.ts";
+import { Types } from 'mongoose';
 
-export const newsSchemaValidation = z.object({
+export const newsSchemaCreateValidation = z.object({
 
     chapeu: z.string()
         .min(NEWS_RULES.HAT.MIN, MESSAGES_ERROR.NEWS.FIELD_HAT_MIN_CARACTERES(NEWS_RULES.HAT.MIN))
@@ -46,4 +47,61 @@ export const newsSchemaValidation = z.object({
         .min(NEWS_RULES.SECTION.MIN, MESSAGES_ERROR.NEWS.FIELD_SECTION_MIN_CARACTERES(NEWS_RULES.SECTION.MIN))
         .max(NEWS_RULES.SECTION.MAX, MESSAGES_ERROR.NEWS.FIELD_SECTION_MAX_CARACTERES(NEWS_RULES.SECTION.MAX))
         .trim()
+});
+
+export const newsSchemaUpdateValidation = z.object({
+
+    chapeu: z.string()
+        .min(NEWS_RULES.HAT.MIN, MESSAGES_ERROR.NEWS.FIELD_HAT_MIN_CARACTERES(NEWS_RULES.HAT.MIN))
+        .max(NEWS_RULES.HAT.MAX, MESSAGES_ERROR.NEWS.FIELD_HAT_MAX_CARACTERES(NEWS_RULES.HAT.MAX))
+        .trim(),
+    
+    titulo: z.string()
+        .min(NEWS_RULES.TITLE.MIN, MESSAGES_ERROR.NEWS.FIELD_TITLE_MIN_CARACTERES(NEWS_RULES.TITLE.MIN))
+        .max(NEWS_RULES.TITLE.MAX, MESSAGES_ERROR.NEWS.FIELD_TITLE_MAX_CARACTERES(NEWS_RULES.TITLE.MAX))
+        .trim(),
+
+    linhaFina: z.string()
+        .min(NEWS_RULES.SUBHEADLINE.MIN, MESSAGES_ERROR.NEWS.FIELD_SUBHEADLINE_MIN_CARACTERES(NEWS_RULES.SUBHEADLINE.MIN))
+        .max(NEWS_RULES.SUBHEADLINE.MAX, MESSAGES_ERROR.NEWS.FIELD_SUBHEADLINE_MAX_CARACTERES(NEWS_RULES.SUBHEADLINE.MAX))
+        .trim(),
+
+    conteudo: z.string()
+        .min(NEWS_RULES.CONTENT.MIN, MESSAGES_ERROR.NEWS.FIELD_CONTENT_MIN_CARACTERES(NEWS_RULES.CONTENT.MIN))
+        .max(NEWS_RULES.CONTENT.MAX, MESSAGES_ERROR.NEWS.FIELD_CONTENT_MAX_CARACTERES(NEWS_RULES.CONTENT.MAX))
+        .trim(),
+
+    autor: z.string()
+        .min(NEWS_RULES.AUTHOR.MIN, MESSAGES_ERROR.NEWS.FIELD_AUTHOR_MIN_CARACTERES(NEWS_RULES.AUTHOR.MIN))
+        .max(NEWS_RULES.AUTHOR.MAX, MESSAGES_ERROR.NEWS.FIELD_AUTHOR_MAX_CARACTERES(NEWS_RULES.AUTHOR.MAX))
+        .trim(),
+
+    imagemUrl: z.string()
+        .min(NEWS_RULES.IMAGE_URL.MIN, MESSAGES_ERROR.NEWS.FIELD_IMAGE_URL_MIN_CARACTERES(NEWS_RULES.IMAGE_URL.MIN))
+        .trim(),
+
+    imagemLegenda: z.string()
+        .min(NEWS_RULES.IMAGE_CAPTION.MIN, MESSAGES_ERROR.NEWS.FIELD_IMAGE_CAPTION_MIN_CARACTERES(NEWS_RULES.IMAGE_CAPTION.MIN))
+        .max(NEWS_RULES.IMAGE_CAPTION.MAX, MESSAGES_ERROR.NEWS.FIELD_IMAGE_CAPTION_MAX_CARACTERES(NEWS_RULES.IMAGE_CAPTION.MAX))
+        .trim(),
+
+    linkOriginal: z.string()
+        .min(NEWS_RULES.LINK_ORIGINAL.MIN, MESSAGES_ERROR.NEWS.FIELD_LINK_ORIGINAL_MIN_CARACTERES(NEWS_RULES.LINK_ORIGINAL.MIN))
+        .trim(),
+
+    editoria: z.string()
+        .min(NEWS_RULES.SECTION.MIN, MESSAGES_ERROR.NEWS.FIELD_SECTION_MIN_CARACTERES(NEWS_RULES.SECTION.MIN))
+        .max(NEWS_RULES.SECTION.MAX, MESSAGES_ERROR.NEWS.FIELD_SECTION_MAX_CARACTERES(NEWS_RULES.SECTION.MAX))
+        .trim(),
+
+    destaquePrincipal: z.boolean(),
+
+    destaqueSecundario: z.boolean()
+});
+
+export const idParamValidation = z.object({
+    id: z.string()
+        .trim()
+        .refine((value) => Types.ObjectId.isValid(value), { message: MESSAGES_ERROR.GENERAL.INVALID_ID })
+        .transform((value) => new Types.ObjectId(value))
 });
